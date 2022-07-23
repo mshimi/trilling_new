@@ -1,0 +1,3 @@
+String appUserCollection = 'appUser';
+
+

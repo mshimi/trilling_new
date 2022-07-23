@@ -38,6 +38,9 @@ dependencies:
   cloud_firestore: ^3.4.0
   firebase_auth: ^3.5.0
   beamer: ^1.5.0
+  dartz: ^0.10.1
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:
