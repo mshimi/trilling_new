@@ -7,6 +7,7 @@ class Order {
   List<Item> items;
   double totalPrice;
   int countGuest;
+  bool isCancelled;
   Order({
     required this.id,
     required this.orderDate,
@@ -14,5 +15,6 @@ class Order {
     required this.items,
     required this.totalPrice,
     required this.countGuest,
+    this.isCancelled = false,
   });
 }

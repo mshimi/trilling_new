@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trilling_web/core/failures/store_failure.dart';
@@ -11,8 +13,23 @@ import 'package:trilling_web/features/auth/infrastructure/model/appUserModel.dar
 class Auth_Imp implements Auth_Repo {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
+  AppUser? appUser;
+  bool _isAuth = false;
+  StreamSubscription? streamSubscription;
 
-  Auth_Imp({required this.firebaseAuth, required this.firebaseFirestore});
+  Auth_Imp({required this.firebaseAuth, required this.firebaseFirestore}) {
+    streamSubscription = firebaseAuth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+        _isAuth = false;
+      } else {
+        print('User is signed in!');
+
+        _isAuth = true;
+        print('isAuth1 $_isAuth');
+      }
+    });
+  }
 
   @override
   Future<Either<AuthFailure, AppUser>> signIn(
@@ -27,6 +44,8 @@ class Auth_Imp implements Auth_Repo {
           await firebaseFirestore.collection(appUserCollection).doc(uid).get();
 
       AppUser appUser = AppUserModel.fromFirebase(userData).toDomain();
+
+      this.appUser = appUser;
       return right(appUser);
     } on FirebaseAuthException catch (_) {
       return left(InvalidEmailAndPasswordCombinationFailure());
@@ -37,6 +56,7 @@ class Auth_Imp implements Auth_Repo {
   Future<Either<AuthFailure, Unit>> signOut() async {
     try {
       firebaseAuth.signOut();
+      _isAuth = false;
       return const Right(unit);
     } on FirebaseAuthException catch (_) {
       return Left(ServerFailure());
@@ -65,18 +85,22 @@ class Auth_Imp implements Auth_Repo {
       }
     } catch (e) {
       print(e);
-     return left(InvalidEmailAndPasswordCombinationFailure());
+      return left(InvalidEmailAndPasswordCombinationFailure());
     }
   }
 
   @override
   bool isAuthenticated() {
-    User? user = firebaseAuth.currentUser;
-
-    if (user == null) {
-      return false;
-    } else {
-      return true;
+    print('isAuth $_isAuth');
+    if (_isAuth == true) {
+      streamSubscription!.cancel();
     }
+
+    return _isAuth;
+  }
+
+  @override
+  AppUser? currentAppUser() {
+    return appUser;
   }
 }
