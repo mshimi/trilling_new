@@ -1,3 +1,5 @@
-abstract class StoreFailure {}
+abstract class Failure {}
 
-class DocumentNotExistsFailure extends StoreFailure {}
+class DocumentNotExistsFailure extends Failure {}
+
+class StoreFailure extends Failure{}

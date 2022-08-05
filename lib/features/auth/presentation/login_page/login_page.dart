@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 
 import 'package:trilling_web/features/auth/presentation/login_page/bloc/auth_bloc/auth_bloc.dart';
 import 'package:trilling_web/features/auth/presentation/login_page/core/email_textForm.dart';
@@ -18,8 +20,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = context.getWidth();
+    double height = context.getHeight();
+
+    print('height is $height');
 
     var responsiveWrapper = ResponsiveWrapper.of(context);
 
