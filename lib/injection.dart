@@ -8,6 +8,12 @@ import 'package:trilling_web/features/auth/presentation/login_page/bloc/auth_blo
 import 'package:trilling_web/features/client_feature/data/repositories/client_imp.dart';
 import 'package:trilling_web/features/client_feature/domain/repositories/client_repository.dart';
 import 'package:trilling_web/features/client_feature/domain/usecases/add_new_client.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_all_clients.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_city.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_district.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_firstname.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_id.dart';
+import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_name.dart';
 import 'package:trilling_web/features/client_feature/domain/usecases/get_concerned_client.dart';
 
 final sl = GetIt.I; // sl == service locator
@@ -23,15 +29,38 @@ Future<void> init() async {
       () => ClientImp(firestore: sl.get()));
 
 
+  /* Client UseCases  */
+
+
         sl.registerLazySingleton<AddNewClientUseCase>(
       () => AddNewClientUseCase(clientRepository: sl.get()));
 
               sl.registerLazySingleton<GetConcernedClientUseCase>(
       () => GetConcernedClientUseCase(clientRepository: sl.get()));
 
+                sl.registerLazySingleton<GetAllClientsUseCase>(
+      () => GetAllClientsUseCase(clientRepository: sl.get()));
 
-  // sl.registerFactory<Auth_Repo>(
-  //     () => Auth_Imp(firebaseAuth: sl(), firebaseFirestore: sl()));
+
+                sl.registerLazySingleton<GetClientsByCityUseCase>(
+      () => GetClientsByCityUseCase(clientRepository: sl.get()));
+
+           sl.registerLazySingleton<GetClientsByFirstNameUseCase>(
+      () => GetClientsByFirstNameUseCase(clientRepository: sl.get()));
+
+      
+           sl.registerLazySingleton<GetClientsByNameUseCase>(
+      () => GetClientsByNameUseCase(clientRepository: sl.get()));
+
+  
+           sl.registerLazySingleton<GetClientsByDistrictUseCase>(
+      () => GetClientsByDistrictUseCase(clientRepository: sl.get()));
+
+
+
+           sl.registerLazySingleton<GetClientsByIdUseCase>(
+      () => GetClientsByIdUseCase(clientRepository: sl.get()));
+
   //bloc
 
   sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));

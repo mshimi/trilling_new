@@ -5,7 +5,7 @@ import 'package:trilling_web/features/client_feature/data/models/client_model.da
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
 
 abstract class ClientRepository {
-  Future<Either<Failure, Unit>> addNewClient({required Client client});
+  Future<Either<Failure, String>> addNewClient({required Client client});
 
 /*  
 
@@ -32,4 +32,8 @@ Done
 
   Future<Either<Failure, List<ClientModel>>> getConcernedClient(
       {required String keyword});
+
+      Future<Either<Failure, List<ClientModel>>> getClientbyId(
+      {required String keyword});
 }
+

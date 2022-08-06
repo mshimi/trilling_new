@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:trilling_web/core/utils/enums.dart';
 import 'package:trilling_web/features/client_feature/data/models/client_model.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
@@ -12,14 +14,17 @@ class ClientImp implements ClientRepository {
 
   ClientImp({required this.firestore});
 
-  @override
-  Future<Either<Failure, Unit>> addNewClient({required Client client}) async {
-    try {
-      await firestore
-          .appCollection(dbCollections: DbCollections.client)
-          .add(ClientModel.fromDomain(client).toMap());
+  /*    Done    */
 
-      return Right(unit);
+  @override
+  Future<Either<Failure, String>> addNewClient({required Client client}) async {
+    try {
+      DocumentReference<Map<String, dynamic>> documentReferance =
+          await firestore
+              .appCollection(dbCollections: DbCollections.client)
+              .add(ClientModel.fromDomain(client).toMap());
+
+      return Right(documentReferance.id);
     } catch (e) {
       /* 
       
@@ -40,7 +45,7 @@ class ClientImp implements ClientRepository {
           .doc(clientModel.id)
           .update(clientModel.toMap());
 
-      return (Right(unit));
+      return (const Right(unit));
     } catch (e) {
       /* 
       
@@ -51,6 +56,8 @@ class ClientImp implements ClientRepository {
       return Left(StoreFailure());
     }
   }
+
+  /* Pinding */
 
   @override
   Future<Either<Failure, List<ClientModel>>> getAllClients(
@@ -77,31 +84,13 @@ class ClientImp implements ClientRepository {
   }
 
   @override
-  Future<Either<Failure, List<ClientModel>>> getConcernedClient({
-    required String keyword,
-  }) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
-          .appCollection(dbCollections: DbCollections.client)
-          .limit(20)
-          .where('name', arrayContains: 'ahmed').get();
-
-      return Right(querySnapshot.docs
-          .map((e) => ClientModel.fromMap(e.data()))
-          .toList());
-    } catch (e) {
-      return Left(StoreFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, List<ClientModel>>> getClientbyCity(
       {required String keyword}) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
           .limit(20)
-          .where('', arrayContains: keyword)
+          .where('city', isEqualTo: keyword)
           .get();
 
       return Right(querySnapshot.docs
@@ -119,7 +108,7 @@ class ClientImp implements ClientRepository {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
           .limit(20)
-          .where('', arrayContains: keyword)
+          .where('firstName', isGreaterThanOrEqualTo: keyword)
           .get();
 
       return Right(querySnapshot.docs
@@ -137,7 +126,7 @@ class ClientImp implements ClientRepository {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
           .limit(20)
-          .where('', arrayContains: keyword)
+          .where('name', isGreaterThanOrEqualTo: keyword)
           .get();
 
       return Right(querySnapshot.docs
@@ -155,7 +144,48 @@ class ClientImp implements ClientRepository {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
           .limit(20)
-          .where('', arrayContains: keyword)
+          .where('district', isEqualTo: keyword)
+          .get();
+
+      return Right(querySnapshot.docs
+          .map((e) => ClientModel.fromMap(e.data()))
+          .toList());
+    } catch (e) {
+      return Left(StoreFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ClientModel>>> getConcernedClient({
+    required String keyword,
+  }) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
+          .appCollection(dbCollections: DbCollections.client)
+          .where('clientAdresse',
+              isGreaterThanOrEqualTo: {'city': 'Herne'}).get();
+
+      List<ClientModel> listOfClientModel = [];
+      querySnapshot.docs.forEach((doc) {
+        ClientModel clientModel = ClientModel.fromMap(doc.data());
+        // print(doc.data());
+        listOfClientModel.add(clientModel);
+      });
+
+      return Right(listOfClientModel);
+    } catch (e) {
+      return Left(StoreFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ClientModel>>> getClientbyId(
+      {required String keyword}) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
+          .appCollection(dbCollections: DbCollections.client)
+          .limit(20)
+          .where('id', isGreaterThanOrEqualTo: keyword)
           .get();
 
       return Right(querySnapshot.docs
