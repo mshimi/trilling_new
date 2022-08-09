@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 extension MediaQueryValues on BuildContext {
 
 
-  double getWidth() => MediaQuery.of(this).size.width;
+  double getWidth({int dividedOn = 1}) => MediaQuery.of(this).size.width/ dividedOn;
 
- double getHeight() => MediaQuery.of(this).size.height;
+ double getHeight({int dividedOn = 1}) => MediaQuery.of(this).size.height / dividedOn;
 
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:trilling_web/core/presentation/theme.dart';
+import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
 import 'package:trilling_web/features/auth/presentation/home_page/home_page.dart';
 import 'package:trilling_web/features/auth/presentation/login_page/login_page.dart';
+import 'package:trilling_web/features/client_feature/presentation/pages/new_client_page.dart';
 import 'package:trilling_web/injection.dart';
 
 class MyApp extends StatelessWidget {
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
         final loggedIn = sl.get<Auth_Repo>().isAuthenticated();
         final loggingIn = state.location == '/login';
 
+        // add ! to the below line !loggedIn
         if (!loggedIn) return loggingIn ? null : '/login';
 
         if (loggingIn && loggedIn) return '/';
@@ -30,16 +33,21 @@ class MyApp extends StatelessWidget {
       routes: <GoRoute>[
         GoRoute(
           path: '/login',
-          builder: (BuildContext context, GoRouterState state) => LoginPage(),
+          builder: (BuildContext context, GoRouterState state) => HomePage(),
         ),
         GoRoute(
-            path: '/',
-            builder: (BuildContext context, GoRouterState state) {
-              print(state.subloc);
-              return HomePage(
-                appUser: sl.get<Auth_Repo>().currentAppUser(),
-              );
-            }),
+          path: '/',
+          builder: (BuildContext context, GoRouterState state) {
+            return HomePage(
+              appUser: sl.get<Auth_Repo>().currentAppUser(),
+            );
+          },
+        ),
+        GoRoute(
+            path: '/neuerKunde',
+            builder: ((context, state) {
+              return NewClientPage();
+            })),
       ],
     );
 
@@ -60,7 +68,7 @@ class MyApp extends StatelessWidget {
           const ResponsiveBreakpoint.autoScale(1200, name: DESKTOP),
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
-        background: Container(color: Colors.white),
+        background: Container(color: whiteColor),
       ),
     );
   }

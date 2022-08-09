@@ -7,24 +7,29 @@ import 'package:trilling_web/features/product_feature/domain/entities/product_ca
 
 class ProductCapicityModel extends Equatable {
   int maxPax;
+  int minPax;
   PackungModel packung;
   ProductCapicityModel({
+    required this.minPax,
     required this.maxPax,
     required this.packung,
   });
 
   ProductCapicityModel copyWith({
     int? maxPax,
+    int? minPax,
     PackungModel? packung,
   }) {
     return ProductCapicityModel(
       maxPax: maxPax ?? this.maxPax,
       packung: packung ?? this.packung,
+      minPax: minPax ?? this.minPax,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'minPax': minPax,
       'maxPax': maxPax,
       'packung': packung.toMap(),
     };
@@ -34,6 +39,7 @@ class ProductCapicityModel extends Equatable {
     return ProductCapicityModel(
       maxPax: map['maxPax']?.toInt() ?? 0,
       packung: PackungModel.fromMap(map['packung']),
+      minPax: map['minPax']?.toInt() ?? 0,
     );
   }
 
@@ -51,15 +57,12 @@ class ProductCapicityModel extends Equatable {
 
   factory ProductCapicityModel.fromDomain(ProductCapicity productCapicity) {
     return ProductCapicityModel(
+      minPax: productCapicity.minPax,
         maxPax: productCapicity.maxPax,
         packung: PackungModel.fromDomain(productCapicity.packung));
   }
 
   ProductCapicity toDomain() {
-    return ProductCapicity(maxPax: maxPax, packung: packung.toDomain());
+    return ProductCapicity(maxPax: maxPax, minPax: minPax, packung: packung.toDomain());
   }
-
-
-  
-
 }

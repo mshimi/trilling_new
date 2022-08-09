@@ -16,6 +16,9 @@ extension FireBaseFireStoreCollection on FirebaseFirestore {
       case DbCollections.orders:
         return collection('orders');
 
+          case DbCollections.products:
+        return collection('products');
+
       default:
         throw (Exception);
     }

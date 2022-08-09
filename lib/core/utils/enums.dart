@@ -2,6 +2,7 @@ enum DbCollections {
   client,
   clientOrders,
   orders,
+  products,
   
 }
 

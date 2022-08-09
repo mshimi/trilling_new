@@ -164,14 +164,5 @@ class ProductModel extends Equatable {
     );
   }
 
-  // List<ProductCapicityModel> _fromListOfDomainToListOfModel(
-  //     List<ProductCapicity> listOfDomain) {
-  //   List<ProductCapicityModel> listOfModel = [];
-
-  //   listOfDomain.forEach((ProductCapicity productCapicity) {
-  //   listOfModel.add(  ProductCapicityModel.fromDomain(productCapicity));
-  //   });
-
-  //   return listOfModel;
-  // }
+  
 }
