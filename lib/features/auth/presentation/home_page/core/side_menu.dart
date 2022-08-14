@@ -10,7 +10,7 @@ import 'package:trilling_web/features/auth/presentation/home_page/core/sidemenuI
 class SideMenu extends StatelessWidget {
   List sideMenuList;
   double height;
-   SideMenu({
+  SideMenu({
     Key? key,
     required this.height,
     required this.sideMenuList,
@@ -20,12 +20,14 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: context.getWidth(dividedOn: 5),
+      width: context.getWidth() * 0.20,
       color: darkBlue,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ListView.separated(
+            controller: ScrollController(),
+              physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => const SizedBox(
                     height: 8,
                   ),

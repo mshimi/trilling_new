@@ -19,7 +19,13 @@ import 'package:trilling_web/features/client_feature/domain/usecases/get_client_
 import 'package:trilling_web/features/client_feature/domain/usecases/get_client_by_name.dart';
 import 'package:trilling_web/features/client_feature/domain/usecases/get_concerned_client.dart';
 import 'package:trilling_web/features/client_feature/domain/usecases/update_client_data.dart';
+import 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
 import 'package:trilling_web/features/client_feature/presentation/bloc/new_client_bloc/new_client_bloc.dart';
+import 'package:trilling_web/features/core_feature/data/repositories/core_data_imp.dart';
+import 'package:trilling_web/features/core_feature/domain/repositories/core_data_repo.dart';
+import 'package:trilling_web/features/core_feature/domain/usecases/get_core_data_usecase.dart';
+import 'package:trilling_web/features/core_feature/domain/usecases/update_core_data_usecase.dart';
+import 'package:trilling_web/features/core_feature/presentation/bloc/core_bloc.dart';
 import 'package:trilling_web/features/product_feature/domain/repositories/product_repository.dart';
 import 'package:trilling_web/features/product_feature/data/repositories/product_imp.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
@@ -28,6 +34,18 @@ import 'package:trilling_web/features/product_feature/domain/usecases/update_pro
 final sl = GetIt.I; // sl == service locator
 
 Future<void> init() async {
+//? Core
+/* Repos */
+  sl.registerLazySingleton<CoreDataRepo>(
+      () => CoreDataImp(firestore: sl.get()));
+
+  /* Core useCases */
+
+  sl.registerLazySingleton<GetCoreDataUseCase>(() => GetCoreDataUseCase(coreDataRepo: sl.get()));
+
+    sl.registerLazySingleton<UpdateCoreDataUseCase>(() => UpdateCoreDataUseCase(coreDataRepo: sl.get()));
+
+
 //? auth
 
 /*  Repos   */
@@ -87,6 +105,17 @@ Future<void> init() async {
       () => NewClientBloc(inputValidatorRepository: sl.get()));
 
   sl.registerFactory<HomeNavigatorBloc>(() => HomeNavigatorBloc());
+
+  sl.registerFactory<CoreBloc>(() => CoreBloc(getCoreDataUseCase: sl.get(), updateCoreDataUseCase: sl.get()));
+
+  sl.registerFactory<ClientPageBloc>(() => ClientPageBloc(
+      addNewClientUseCase: sl.get(),
+      getAllClientsUseCase: sl.get(),
+      getClientsByCityUseCase: sl.get(),
+      getClientsByDistrictUseCase: sl.get(),
+      getClientsByFirstNameUseCase: sl.get(),
+      getClientsByIdUseCase: sl.get(),
+      getClientsByNameUseCase: sl.get()));
 
   //! extern
   final friebaseAuth = FirebaseAuth.instance;

@@ -3,6 +3,7 @@ enum DbCollections {
   clientOrders,
   orders,
   products,
+  core,
   
 }
 

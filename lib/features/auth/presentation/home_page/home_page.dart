@@ -8,7 +8,10 @@ import 'package:trilling_web/features/auth/presentation/bloc/home_navigator_bloc
 import 'package:trilling_web/features/auth/presentation/home_page/core/side_menu.dart';
 
 import 'package:trilling_web/features/auth/presentation/home_page/core/sidemenuItem.dart';
+import 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
 import 'package:trilling_web/features/client_feature/presentation/pages/client_page.dart';
+import 'package:trilling_web/features/core_feature/presentation/bloc/core_bloc.dart';
+import 'package:trilling_web/features/core_feature/presentation/pages/admin_page.dart';
 
 import 'package:trilling_web/injection.dart';
 
@@ -28,19 +31,31 @@ class HomePage extends StatelessWidget {
 
     List sideMenuList = [
       {'text': 'Home', 'icon': Icons.home, 'page': Placeholder()},
-      {'text': 'Kunden', 'icon': Icons.people, 'page': ClientPage()},
+      {'text': 'Kunden', 'icon': Icons.people, 'page': const ClientPage()},
       {
         'text': 'Product',
         'icon': Icons.shopping_cart_rounded,
         'page': Placeholder()
       },
+      {
+        'text': 'Admin',
+        'icon': Icons.admin_panel_settings_rounded,
+        'page': const AdminPage()
+      },
     ];
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => sl.get<CoreBloc>()..add(GetCoreDataEvent()),
+          lazy: false,
+        ),
+        BlocProvider(
           create: (context) => sl.get<HomeNavigatorBloc>(),
           lazy: false,
         ),
+        BlocProvider(
+          create: (context) => sl.get<ClientPageBloc>(),
+        )
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -55,7 +70,8 @@ class HomePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               SideMenu(height: height, sideMenuList: sideMenuList),
-              Expanded(
+              Flexible(
+                // width: context.getWidth() ,
                 child: BlocBuilder<HomeNavigatorBloc, HomeNavigatorState>(
                     builder: ((context, state) {
                   HomeNavigatorBloc homeNavigatorBloc =

@@ -19,18 +19,16 @@ class ClientModel {
   String createdOn;
   String city;
   String district;
-  ClientModel({
-    
-    required this.name,
-    required this.firstName,
-    required this.id,
-    required this.clientAdresse,
-    this.deliveryAdresse,
-    required this.createdBy,
-    required this.createdOn,
-    required this.city,
-    required this.district
-  });
+  ClientModel(
+      {required this.name,
+      required this.firstName,
+      required this.id,
+      required this.clientAdresse,
+      this.deliveryAdresse,
+      required this.createdBy,
+      required this.createdOn,
+      required this.city,
+      required this.district});
 
   ClientModel copyWith({
     String? name,
@@ -83,30 +81,30 @@ class ClientModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is ClientModel &&
-      other.name == name &&
-      other.firstName == firstName &&
-      other.id == id &&
-      other.clientAdresse == clientAdresse &&
-      listEquals(other.deliveryAdresse, deliveryAdresse) &&
-      other.createdBy == createdBy &&
-      other.createdOn == createdOn &&
-      other.city == city &&
-      other.district == district;
+        other.name == name &&
+        other.firstName == firstName &&
+        other.id == id &&
+        other.clientAdresse == clientAdresse &&
+        listEquals(other.deliveryAdresse, deliveryAdresse) &&
+        other.createdBy == createdBy &&
+        other.createdOn == createdOn &&
+        other.city == city &&
+        other.district == district;
   }
 
   @override
   int get hashCode {
     return name.hashCode ^
-      firstName.hashCode ^
-      id.hashCode ^
-      clientAdresse.hashCode ^
-      deliveryAdresse.hashCode ^
-      createdBy.hashCode ^
-      createdOn.hashCode ^
-      city.hashCode ^
-      district.hashCode;
+        firstName.hashCode ^
+        id.hashCode ^
+        clientAdresse.hashCode ^
+        deliveryAdresse.hashCode ^
+        createdBy.hashCode ^
+        createdOn.hashCode ^
+        city.hashCode ^
+        district.hashCode;
   }
 
   factory ClientModel.fromDomain(Client client) {
@@ -116,13 +114,15 @@ class ClientModel {
           deliveryAdressetfromDomain.add(AdresseModel.fromDomain(adresse)));
     }
     return ClientModel(
-        name: client.name,
-        firstName: client.firstName,
+        name: client.name.toLowerCase(),
+        firstName: client.firstName.toLowerCase(),
         id: client.id,
         clientAdresse: AdresseModel.fromDomain(client.clientAdresse),
         createdBy: client.createdBy,
         createdOn: client.createdOn,
-        deliveryAdresse: deliveryAdressetfromDomain, city: client.clientAdresse.city, district: client.clientAdresse.city);
+        deliveryAdresse: deliveryAdressetfromDomain,
+        city: client.clientAdresse.city,
+        district: client.clientAdresse.city);
   }
 
   Client toDomain() {
@@ -133,8 +133,8 @@ class ClientModel {
     }
 
     return Client(
-        firstName: firstName,
-        name: name,
+        firstName: '${firstName[0].toUpperCase()}${firstName.substring(1)}',
+        name: '${name[0].toUpperCase()}${name.substring(1)}',
         id: id,
         deliveryAdresse: deliveryAdressetoDomain,
         clientAdresse: clientAdresse.toDomain(),
@@ -142,15 +142,16 @@ class ClientModel {
         createdOn: createdOn);
   }
 
- 
-
   factory ClientModel.fromMap(Map<String, dynamic> map) {
     return ClientModel(
       name: map['name'] ?? '',
       firstName: map['firstName'] ?? '',
       id: map['id'] ?? '',
       clientAdresse: AdresseModel.fromMap(map['clientAdresse']),
-      deliveryAdresse: map['deliveryAdresse'] != null ? List<AdresseModel>.from(map['deliveryAdresse']?.map((x) => AdresseModel.fromMap(x))) : null,
+      deliveryAdresse: map['deliveryAdresse'] != null
+          ? List<AdresseModel>.from(
+              map['deliveryAdresse']?.map((x) => AdresseModel.fromMap(x)))
+          : null,
       createdBy: map['createdBy'] ?? '',
       createdOn: map['createdOn'] ?? '',
       city: map['city'] ?? '',

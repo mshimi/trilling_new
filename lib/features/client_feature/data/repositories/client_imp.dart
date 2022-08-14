@@ -125,7 +125,7 @@ class ClientImp implements ClientRepository {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
-          .limit(20)
+          .limit(10)
           .where('name', isGreaterThanOrEqualTo: keyword)
           .get();
 
