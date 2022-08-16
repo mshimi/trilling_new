@@ -6,10 +6,10 @@ import 'package:trilling_web/features/product_feature/data/models/packung_model.
 import 'package:trilling_web/features/product_feature/domain/entities/product_capicity.dart';
 
 class ProductCapicityModel extends Equatable {
-  int maxPax;
-  int minPax;
-  PackungModel packung;
-  ProductCapicityModel({
+ final int maxPax;
+ final int minPax;
+ final PackungModel packung;
+const  ProductCapicityModel({
     required this.minPax,
     required this.maxPax,
     required this.packung,

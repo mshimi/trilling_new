@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +9,7 @@ import 'package:trilling_web/features/auth/presentation/login_page/core/email_te
 import 'package:trilling_web/features/auth/presentation/login_page/core/login_button.dart';
 import 'package:trilling_web/features/auth/presentation/login_page/core/logo.dart';
 import 'package:trilling_web/features/auth/presentation/login_page/core/password_textformfield.dart';
-import 'package:trilling_web/features/auth/presentation/login_page/core/textAnmelden.dart';
+import 'package:trilling_web/features/auth/presentation/login_page/core/text_anmelden.dart';
 import 'package:trilling_web/injection.dart';
 
 class LoginPage extends StatelessWidget {
@@ -20,10 +17,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     double width = context.getWidth();
+    // ignore: unused_local_variable
     double height = context.getHeight();
-
-    print('height is $height');
 
     var responsiveWrapper = ResponsiveWrapper.of(context);
 
@@ -43,7 +40,7 @@ class LoginPage extends StatelessWidget {
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
+                    const Expanded(
                       flex: 3,
                       child: Logo(),
                     ),
@@ -68,7 +65,7 @@ class LoginPage extends StatelessWidget {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Logo(),
                     ),
                     Expanded(

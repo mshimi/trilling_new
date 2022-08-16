@@ -44,7 +44,7 @@ class ProductModel extends Equatable {
     CreationInfoModel? creationInfo,
     List<String>? allergySubstances,
     List<String>? additives,
-    List<ProductCapicityModel>? ProductCapicites,
+    List<ProductCapicityModel>? productCapicites,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -57,7 +57,7 @@ class ProductModel extends Equatable {
       creationInfo: creationInfo ?? this.creationInfo,
       allergySubstances: allergySubstances ?? this.allergySubstances,
       additives: additives ?? this.additives,
-      productCapicites: ProductCapicites ?? this.productCapicites,
+      productCapicites: productCapicites ?? this.productCapicites,
     );
   }
 
@@ -124,9 +124,9 @@ class ProductModel extends Equatable {
   factory ProductModel.fromDomain(Product product) {
     List<ProductCapicityModel> listOfModel = [];
 
-    product.productCapicites.forEach((ProductCapicity productCapicity) {
+    for (var productCapicity in product.productCapicites) {
       listOfModel.add(ProductCapicityModel.fromDomain(productCapicity));
-    });
+    }
 
     return ProductModel(
       pricePerPerson: product.pricePerPerson,
@@ -144,11 +144,9 @@ class ProductModel extends Equatable {
 
   Product toDomain() {
     List<ProductCapicity> listOfDomain = [];
-    productCapicites.forEach(
-      (element) {
+    for (var element in productCapicites) {
         listOfDomain.add(element.toDomain());
-      },
-    );
+      }
 
     return Product(
       pricePerPerson: pricePerPerson,

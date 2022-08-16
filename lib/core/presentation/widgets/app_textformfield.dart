@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -21,6 +20,7 @@ class AppTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       width: width,
       child: TextFormField(
@@ -29,7 +29,7 @@ class AppTextFormField extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           label: Text(labelText),
-          floatingLabelStyle: TextStyle(color: Colors.black),
+          floatingLabelStyle: const TextStyle(color: Colors.black),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
           border: const OutlineInputBorder(

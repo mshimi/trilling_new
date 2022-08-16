@@ -34,7 +34,7 @@ class ProductImp implements ProductRepository {
           .doc(productModel.id!)
           .update(productModel.toMap());
 
-      return Right(unit);
+      return const Right(unit);
     } catch (e) {
       return left(StoreFailure());
     }
@@ -49,7 +49,7 @@ class ProductImp implements ProductRepository {
           .doc(productId)
           .delete();
 
-      return Right(unit);
+      return const Right(unit);
     } catch (e) {
       return left(StoreFailure());
     }

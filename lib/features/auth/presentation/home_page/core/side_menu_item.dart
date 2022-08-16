@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:trilling_web/core/utils/colors.dart';
 
 class SideMenuItem extends StatefulWidget {
-  double height;
-  String text;
-  IconData iconData;
-  Function onTap;
-  bool iselected;
+ final double height;
+ final String text;
+  final IconData iconData;
+ final Function onTap;
+final  bool iselected;
 
-  SideMenuItem({
+ const SideMenuItem({
     Key? key,
     required this.iselected,
     required this.onTap,

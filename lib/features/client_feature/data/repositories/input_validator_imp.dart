@@ -12,18 +12,18 @@ class InputValidatorImp implements InputValidatorRepository {
         .hasMatch(email)) {
       return const Right(unit);
     } else {
-      return const Left('$unvalidEmailInputMessage');
+      return const Left(unvalidEmailInputMessage);
     }
   }
 
   @override
-  Either<String, Unit> validateName({required String Name}) {
+  Either<String, Unit> validateName({required String name}) {
     // TODO: implement validateName
     throw UnimplementedError();
   }
 
   @override
-  Either<String, Unit> validatePassword({required String Password}) {
+  Either<String, Unit> validatePassword({required String password}) {
     // TODO: implement validatePassword
     throw UnimplementedError();
   }

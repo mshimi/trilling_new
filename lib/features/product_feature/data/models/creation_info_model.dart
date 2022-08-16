@@ -4,10 +4,10 @@ import 'package:equatable/equatable.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
 
 class CreationInfoModel extends Equatable {
-  String userName;
-  String userId;
-  DateTime creationDate;
-  CreationInfoModel({
+final  String userName;
+final  String userId;
+ final DateTime creationDate;
+const  CreationInfoModel({
     required this.userName,
     required this.userId,
     required this.creationDate,

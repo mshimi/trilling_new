@@ -11,12 +11,16 @@ class DistrictModel {
   });
 
   factory DistrictModel.fromDomain(District district) {
-    return DistrictModel(name: district.name.toLowerCase(), transferPrice: district.transferPrice);
+    return DistrictModel(
+        name: district.name.toLowerCase(),
+        transferPrice: district.transferPrice);
   }
 
- District toDomain(){
-  return District(name: '${name[0].toUpperCase()}${name.substring(1)}}', transferPrice: transferPrice);
- }
+  District toDomain() {
+    return District(
+        name: '${name[0].toUpperCase()}${name.substring(1)}',
+        transferPrice: transferPrice);
+  }
 
   DistrictModel copyWith({
     String? name,

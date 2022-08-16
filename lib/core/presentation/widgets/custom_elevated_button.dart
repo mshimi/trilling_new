@@ -14,14 +14,14 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      constraints: BoxConstraints(maxWidth: 500),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      constraints:const BoxConstraints(maxWidth: 500),
       alignment: Alignment.center,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: Colors.blueGrey,
-            minimumSize: Size(200, 40),
-            maximumSize: Size(450, 40)),
+            minimumSize:const Size(200, 40),
+            maximumSize:const Size(450, 40)),
         onPressed: onpressed,
         child: isLoading
             ? const CircularProgressIndicator(

@@ -1,7 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/packung.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/product_capicity.dart';
 
 class OrderItem {
   String packung;

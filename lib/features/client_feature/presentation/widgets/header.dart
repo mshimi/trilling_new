@@ -34,7 +34,7 @@ class ClientTableHeader extends StatelessWidget {
             ))
         .toList();
 
-    return Container(
+    return SizedBox(
       height: height * 0.05,
       child: Row(
         mainAxisSize: MainAxisSize.max,

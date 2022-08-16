@@ -10,9 +10,9 @@ abstract class HomeNavigatorState extends Equatable {
 class HomeNavigatorInitial extends HomeNavigatorState {}
 
 class IndexChangeState extends HomeNavigatorState {
-  int index;
+final  int index;
 
-  IndexChangeState({required this.index});
+ const IndexChangeState({required this.index});
 
   @override
   List<Object> get props => [index];

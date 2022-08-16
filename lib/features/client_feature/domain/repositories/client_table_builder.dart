@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
-import 'package:trilling_web/features/client_feature/presentation/widgets/client_table_cell.dart';
 
 class ClientTableBuilder {
   final List<Client> clientList;
@@ -10,7 +9,7 @@ class ClientTableBuilder {
   List<DataRow> buildTableRow() {
     List<DataRow> tabelrows = [];
 
-    clientList.forEach((element) {
+    for (var element in clientList) {
       DataRow dataRow = DataRow(
         cells: [
           DataCell(Text(element.id)),
@@ -24,23 +23,23 @@ class ClientTableBuilder {
         ],
       );
       tabelrows.add(dataRow);
-    });
+    }
 
     return tabelrows;
   }
 
   List<DataColumn> buildColumns() {
     return <DataColumn>[
-      DataColumn(
+    const  DataColumn(
         label: Text('Id'),
       ),
-      DataColumn(label: Text('Name'), onSort: ((columnIndex, ascending) {})),
-      DataColumn(label: Text('Vorname')),
-      DataColumn(label: Text('Stadt')),
-      DataColumn(label: Text('Stadtteil')),
-      DataColumn(label: Text('Straße')),
-      DataColumn(label: Text('HouseNumber')),
-      DataColumn(label: Text('Postcode')),
+      DataColumn(label:const Text('Name'), onSort: ((columnIndex, ascending) {})),
+     const DataColumn(label: Text('Vorname')),
+    const  DataColumn(label: Text('Stadt')),
+   const   DataColumn(label: Text('Stadtteil')),
+   const   DataColumn(label: Text('Straße')),
+   const   DataColumn(label: Text('HouseNumber')),
+  const    DataColumn(label: Text('Postcode')),
     ];
   }
 }

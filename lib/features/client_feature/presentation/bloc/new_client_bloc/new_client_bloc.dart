@@ -21,7 +21,6 @@ class NewClientBloc extends Bloc<NewClientEvent, NewClientState> {
 
       emit(ValidInputsState(value: event.email!));
 
-      print(emialErorrMessage);
     });
   }
 

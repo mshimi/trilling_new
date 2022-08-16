@@ -1,10 +1,6 @@
-import 'package:dartz/dartz_unsafe.dart';
-import 'package:trilling_web/features/order_feature/domain/entities/collection.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order_item.dart';
 import 'package:trilling_web/features/order_feature/domain/repositories/collection_builder.dart';
-import 'package:trilling_web/features/product_feature/data/models/packung_model.dart';
 import 'package:trilling_web/features/product_feature/data/models/product_capicity_model.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/packung.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product_capicity.dart';
@@ -42,8 +38,7 @@ class OrderCollectionBuilderImp implements OrderCollectionBuilderRepository {
             value: packung.value,
             product: product);
         collectionOfOneProduct.add(orderItem);
-        print(
-            '$paxNumber - ${ProductCapicityModel.fromDomain(productCapicites[i]).maxPax}');
+
         paxNumber = paxNumber -
             ProductCapicityModel.fromDomain(productCapicites[i]).maxPax;
       }
@@ -64,7 +59,7 @@ class OrderCollectionBuilderImp implements OrderCollectionBuilderRepository {
       // }
     }
     for (var element in collectionOfOneProduct) {
-      print('${element.packung}, ${element.value},${element.paxNumber},');
+    
     }
     return collectionOfOneProduct;
   }

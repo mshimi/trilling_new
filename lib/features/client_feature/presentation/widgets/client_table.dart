@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 
 import 'package:trilling_web/core/utils/colors.dart';
-import 'package:trilling_web/features/client_feature/domain/entities/adresse.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
 
 import 'package:trilling_web/features/client_feature/domain/repositories/client_table_builder.dart';
@@ -28,7 +26,7 @@ class ClientTable extends StatelessWidget {
     ClientTableBuilder clientTableBuilder =
         ClientTableBuilder(clientList: getTableContent());
 
-    return Container(
+    return SizedBox(
       // width: context.getWidth(),
       height: height,
       child: NativeDataTable(

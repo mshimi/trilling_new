@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/auth/presentation/bloc/home_navigator_bloc/home_navigator_bloc.dart';
-import 'package:trilling_web/features/auth/presentation/home_page/core/sidemenuItem.dart';
+import 'package:trilling_web/features/auth/presentation/home_page/core/side_menu_item.dart';
 
 class SideMenu extends StatelessWidget {
-  List sideMenuList;
-  double height;
-  SideMenu({
+final  List sideMenuList;
+final  double height;
+const  SideMenu({
     Key? key,
     required this.height,
     required this.sideMenuList,

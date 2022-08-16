@@ -18,17 +18,17 @@ class HomeNavigatorBloc extends Bloc<HomeNavigatorEvent, HomeNavigatorState> {
     {
       'text': 'Home',
       'icon': Icons.home,
-      'page': Placeholder(),
+      'page':const Placeholder(),
     },
     {
       'text': 'Kunden',
       'icon': Icons.people,
-      'page': ClientPage(),
+      'page':const ClientPage(),
     },
     {
       'text': 'Product',
       'icon': Icons.shopping_cart_rounded,
-      'page': Placeholder()
+      'page':const Placeholder()
     },
   ];
 

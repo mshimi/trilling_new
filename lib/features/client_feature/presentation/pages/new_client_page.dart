@@ -29,7 +29,7 @@ class NewClientPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey,
-          title: Text('Herstellen neuen Kunde'),
+          title:const Text('Herstellen neuen Kunde'),
         ),
         body: BlocBuilder<NewClientBloc, NewClientState>(
           builder: (context, state) {
@@ -42,10 +42,10 @@ class NewClientPage extends StatelessWidget {
               validator: (value) {
                 
               },
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                 labelText: 'Name',
               ),
-              toolbarOptions: ToolbarOptions(),
+              toolbarOptions:const ToolbarOptions(),
             );
           },
         ),

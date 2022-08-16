@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:trilling_web/core/utils/colors.dart';
 
 class ClientTableCell extends StatelessWidget {
   final String text;
@@ -21,6 +20,6 @@ class ClientTableCell extends StatelessWidget {
     );
   }
 
-  TextStyle headerTextStyle = TextStyle(fontWeight: FontWeight.bold);
-  TextStyle rowTextStyle = TextStyle();
+  TextStyle headerTextStyle =const TextStyle(fontWeight: FontWeight.bold);
+  TextStyle rowTextStyle = const TextStyle();
 }

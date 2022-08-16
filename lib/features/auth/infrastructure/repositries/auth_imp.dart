@@ -2,31 +2,31 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:trilling_web/core/failures/store_failure.dart';
 import 'package:trilling_web/core/firesore.dart';
 import 'package:trilling_web/features/auth/domain/entities/appuser.dart';
 import 'package:trilling_web/core/failures/auth_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
-import 'package:trilling_web/features/auth/infrastructure/model/appUserModel.dart';
+import 'package:trilling_web/features/auth/infrastructure/model/appuser_model.dart';
 
 class Auth_Imp implements Auth_Repo {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
-  AppUser? appUser;
+   AppUser? appUser;
   bool _isAuth = false;
   StreamSubscription? streamSubscription;
 
   Auth_Imp({required this.firebaseAuth, required this.firebaseFirestore}) {
     streamSubscription = firebaseAuth.authStateChanges().listen((User? user) {
       if (user == null) {
+        // ignore: avoid_print
         print('User is currently signed out!');
         _isAuth = false;
       } else {
+        // ignore: avoid_print
         print('User is signed in!');
 
         _isAuth = true;
-        print('isAuth1 $_isAuth');
       }
     });
   }
@@ -76,7 +76,7 @@ class Auth_Imp implements Auth_Repo {
               .copyWith(password: newPassword)
               .toMap());
 
-      return Right(unit);
+      return const Right(unit);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return left(WeekPasswordFailure());
@@ -84,14 +84,12 @@ class Auth_Imp implements Auth_Repo {
         return left(InvalidEmailAndPasswordCombinationFailure());
       }
     } catch (e) {
-      print(e);
       return left(InvalidEmailAndPasswordCombinationFailure());
     }
   }
 
   @override
   bool isAuthenticated() {
-    print('isAuth $_isAuth');
     if (_isAuth == true) {
       streamSubscription!.cancel();
     }

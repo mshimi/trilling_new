@@ -34,7 +34,7 @@ class CoreDataImp implements CoreDataRepo {
           .doc('core')
           .update(coreDataModel.toMap());
 
-      return Right(unit);
+      return const Right(unit);
     } catch (e) {
       return Left(StoreFailure());
     }

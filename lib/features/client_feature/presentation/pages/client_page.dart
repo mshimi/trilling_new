@@ -34,7 +34,7 @@ class ClientPage extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).go('/neuerKunde');
                   },
-                  child: Text('Kunde hinzufügen')),
+                  child:const Text('Kunde hinzufügen')),
             ],
           ),
         );

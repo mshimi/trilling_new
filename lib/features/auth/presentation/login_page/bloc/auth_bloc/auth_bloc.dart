@@ -1,17 +1,17 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trilling_web/features/auth/domain/entities/appuser.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
-import 'package:trilling_web/injection.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  // ignore: non_constant_identifier_names
   final Auth_Repo auth_repo;
   AppUser? appUser;
+  // ignore: non_constant_identifier_names
   AuthBloc({required this.auth_repo}) : super(AuthInitial()) {
     on<LoginButtonClicked>((event, emit) async {
       isLoading = true;
@@ -25,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       bool isEmailValidate = false;
       bool isPasswordValidate = false;
 
+      // ignore: unused_local_variable
       String? emailerrormessage;
 
       if (RegExp(
@@ -56,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       signin.fold(
         (left) {
           isLoading = false;
-          emit(LoginFailureState(failureMessage: ''));
+          emit(const LoginFailureState(failureMessage: ''));
         },
         (appUser)  {
           isLoading = false;

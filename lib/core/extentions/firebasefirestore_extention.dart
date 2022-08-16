@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:trilling_web/core/failures/store_failure.dart';
 import 'package:trilling_web/core/utils/enums.dart';
 
 extension FireBaseFireStoreCollection on FirebaseFirestore {

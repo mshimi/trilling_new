@@ -52,9 +52,9 @@ class CollectionModel extends Equatable {
 
   factory CollectionModel.fromDomain(Collection collection) {
     List<ProductModel> listOfProductModel = [];
-    collection.listOfProduct.forEach((Product product) {
+    for (var product in collection.listOfProduct) {
       listOfProductModel.add(ProductModel.fromDomain(product));
-    });
+    }
 
     return CollectionModel(
         listOfProduct: listOfProductModel, packungType: collection.packungType);
@@ -63,11 +63,9 @@ class CollectionModel extends Equatable {
   Collection toDomain() {
     List<Product> listOfProduct = [];
 
-    this.listOfProduct.forEach(
-      (ProductModel productModel) {
+    for (var productModel in this.listOfProduct) {
        listOfProduct.add(productModel.toDomain()) ;
-      },
-    );
+      }
     return Collection(listOfProduct: listOfProduct, packungType: packungType);
   }
 }

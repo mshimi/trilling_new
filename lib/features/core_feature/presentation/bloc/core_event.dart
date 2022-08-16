@@ -8,3 +8,12 @@ abstract class CoreEvent extends Equatable {
 }
 
 class GetCoreDataEvent extends CoreEvent {}
+
+class CityIndexChanged extends CoreEvent {
+  int index;
+
+  CityIndexChanged({required this.index});
+  @override
+  List<Object> get props => [index];
+}
+

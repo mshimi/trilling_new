@@ -5,7 +5,6 @@ import 'package:trilling_web/core/presentation/theme.dart';
 import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
 import 'package:trilling_web/features/auth/presentation/home_page/home_page.dart';
-import 'package:trilling_web/features/auth/presentation/login_page/login_page.dart';
 import 'package:trilling_web/features/client_feature/presentation/pages/new_client_page.dart';
 import 'package:trilling_web/injection.dart';
 
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // sl.get<Auth_Repo>().isAuthenticated();
 
+    // ignore: no_leading_underscores_for_local_identifiers
     final GoRouter _router = GoRouter(
       redirectLimit: 100,
       initialLocation: '/',
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: <GoRoute>[
         GoRoute(
           path: '/login',
-          builder: (BuildContext context, GoRouterState state) => HomePage(),
+          builder: (BuildContext context, GoRouterState state) => const HomePage(),
         ),
         GoRoute(
           path: '/',
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         GoRoute(
             path: '/neuerKunde',
             builder: ((context, state) {
-              return NewClientPage();
+              return const NewClientPage();
             })),
       ],
     );

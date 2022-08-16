@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 
 import 'package:trilling_web/features/core_feature/data/models/district_model.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/city.dart';
-import 'package:trilling_web/features/core_feature/domain/entities/district.dart';
 
 class CityModel {
   String name;

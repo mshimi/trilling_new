@@ -8,20 +8,20 @@ abstract class AuthEvent extends Equatable {
 }
 
 class LoginButtonClicked extends AuthEvent {
-  String email;
-  String password;
+ final String email;
+final  String password;
 
-  LoginButtonClicked({required this.email, required this.password});
+ const LoginButtonClicked({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
 }
 
 class EmailAndPasswrdValidated extends AuthEvent {
-  String email;
-  String password;
+ final String email;
+final  String password;
 
-  EmailAndPasswrdValidated({required this.email, required this.password});
+ const EmailAndPasswrdValidated({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];

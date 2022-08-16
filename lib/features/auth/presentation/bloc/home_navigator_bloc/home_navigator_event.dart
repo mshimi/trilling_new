@@ -8,7 +8,7 @@ abstract class HomeNavigatorEvent extends Equatable {
 }
 
 class IndexChangeEvent extends HomeNavigatorEvent {
-  int index;
+ final int index;
 
-  IndexChangeEvent({ required this.index});
+ const IndexChangeEvent({ required this.index});
 }

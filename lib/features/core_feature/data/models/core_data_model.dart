@@ -4,11 +4,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:trilling_web/features/core_feature/data/models/city_model.dart';
 import 'package:trilling_web/features/core_feature/data/models/product_category_model.dart';
-import 'package:trilling_web/features/core_feature/domain/entities/city.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/core_data.dart';
-import 'package:trilling_web/features/core_feature/domain/entities/product_category.dart';
 import 'package:trilling_web/features/product_feature/data/models/packung_model.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/packung.dart';
 
 class CoreDataModel {
   List<CityModel> cities;

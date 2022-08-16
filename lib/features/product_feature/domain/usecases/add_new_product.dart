@@ -18,7 +18,7 @@ class AddNewProductUseCase {
       (id) async {
         ProductModel newProductModel = productModel.copyWith(id: id);
         return await productRepository.updateProduct(
-            productModel: productModel);
+            productModel: newProductModel);
       },
     );
 

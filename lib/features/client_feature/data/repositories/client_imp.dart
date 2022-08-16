@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:trilling_web/core/utils/enums.dart';
 import 'package:trilling_web/features/client_feature/data/models/client_model.dart';
@@ -31,7 +30,6 @@ class ClientImp implements ClientRepository {
       remove print
 
       */
-      print(e.toString());
       return Left(StoreFailure());
     }
   }
@@ -52,7 +50,6 @@ class ClientImp implements ClientRepository {
       remove print
 
       */
-      print(e.toString());
       return Left(StoreFailure());
     }
   }
@@ -166,11 +163,11 @@ class ClientImp implements ClientRepository {
               isGreaterThanOrEqualTo: {'city': 'Herne'}).get();
 
       List<ClientModel> listOfClientModel = [];
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         ClientModel clientModel = ClientModel.fromMap(doc.data());
         // print(doc.data());
         listOfClientModel.add(clientModel);
-      });
+      }
 
       return Right(listOfClientModel);
     } catch (e) {

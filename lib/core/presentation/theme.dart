@@ -4,13 +4,13 @@ import 'package:trilling_web/core/utils/colors.dart';
 class AppTheme {
 
 
-  static  final TextStyle _lightHeadingText =  TextStyle(
+  static  const TextStyle _lightHeadingText =  TextStyle(
       color: whiteColor,
       fontFamily: "Rubik",
       fontSize: 20,
       fontWeight: FontWeight.bold);
 
-  static final  TextStyle _lightBodyText = TextStyle(
+  static const  TextStyle _lightBodyText = TextStyle(
       color: blackColor,
       fontFamily: "Rubik",
       fontStyle: FontStyle.italic,
@@ -24,7 +24,7 @@ class AppTheme {
       fontWeight: FontWeight.normal,
       fontSize: 16);
 
-  static final TextTheme _lightTextTheme = TextTheme(
+  static const TextTheme _lightTextTheme = TextTheme(
     headline1: _lightHeadingText,
     bodyText1: _lightBodyText,
     bodyText2: _lightBodyText2,
@@ -50,6 +50,7 @@ class AppTheme {
 
   static const Color _iconColor = Colors.white;
 
+  // ignore: unused_field
   static const Color _accentColorDark = Color.fromARGB(255, 212, 125, 24);
 
   static final ThemeData lightTheme = ThemeData(
