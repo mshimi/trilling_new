@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:trilling_web/features/core_feature/data/models/city_model.dart';
+import 'package:trilling_web/features/core_feature/data/models/district_model.dart';
 import 'package:trilling_web/features/core_feature/data/models/product_category_model.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/core_data.dart';
 import 'package:trilling_web/features/product_feature/data/models/packung_model.dart';
@@ -87,4 +88,26 @@ class CoreDataModel {
   @override
   int get hashCode =>
       cities.hashCode ^ categories.hashCode ^ packungen.hashCode;
+
+  List<DistrictModel> getAllDistricts() {
+    List<DistrictModel> allDistricts = [];
+    cities.forEach((element) {
+      allDistricts.addAll(element.districts);
+    });
+
+    return allDistricts;
+  }
+
+  List<String> getAllDistrictsNames() {
+    List<String> allDistricts = [];
+    cities.forEach((element) {
+      allDistricts.addAll(element.districts.map((e) => e.name).toList());
+    });
+
+    return allDistricts;
+  }
+
+  List<String> getAllDistrictsNamesForCity(CityModel cityModel) {
+    return cityModel.districts.map((e) => e.name).toList();
+  }
 }

@@ -5,6 +5,9 @@ import 'package:trilling_web/core/presentation/theme.dart';
 import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
 import 'package:trilling_web/features/auth/presentation/home_page/home_page.dart';
+import 'package:trilling_web/features/auth/presentation/login_page/login_page.dart';
+import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
+import 'package:trilling_web/features/client_feature/presentation/pages/client_page.dart';
 import 'package:trilling_web/features/client_feature/presentation/pages/new_client_page.dart';
 import 'package:trilling_web/injection.dart';
 
@@ -33,21 +36,31 @@ class MyApp extends StatelessWidget {
       routes: <GoRoute>[
         GoRoute(
           path: '/login',
-          builder: (BuildContext context, GoRouterState state) => const HomePage(),
+          builder: (BuildContext context, GoRouterState state) =>
+              const LoginPage(),
         ),
         GoRoute(
-          path: '/',
-          builder: (BuildContext context, GoRouterState state) {
-            return HomePage(
-              appUser: sl.get<Auth_Repo>().currentAppUser(),
-            );
-          },
-        ),
-        GoRoute(
-            path: '/neuerKunde',
-            builder: ((context, state) {
-              return const NewClientPage();
-            })),
+            path: '/',
+            builder: (BuildContext context, GoRouterState state) {
+              return HomePage(
+                appUser: sl.get<Auth_Repo>().currentAppUser(),
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'Clients/:cid',
+                builder: (context, state) {
+                  // use state.params to get router parameter values
+
+                  final String clientId = state.params['cid']!;
+
+                  return ClientPage(
+                    clientId: clientId,
+                    client: state.extra == null ? null : state.extra as Client,
+                  );
+                },
+              ),
+            ]),
       ],
     );
 

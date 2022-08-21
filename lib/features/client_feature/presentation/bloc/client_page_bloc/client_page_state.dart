@@ -7,29 +7,22 @@ abstract class ClientPageState extends Equatable {
   List<Object> get props => [];
 }
 
-class GetSearchByChangedState extends ClientPageState {
-  String searchBy;
-  GetSearchByChangedState({required this.searchBy});
-  @override
-  List<Object> get props => [searchBy];
-}
-
 class ClientPageInitial extends ClientPageState {}
 
-class ClientNewSearchDataState extends ClientPageState {
-  final List<Client> clients;
+class GetClientFailureState extends ClientPageState {}
 
-  const ClientNewSearchDataState({required this.clients});
+class GetClientSucessState extends ClientPageState {
+  Client client;
+  GetClientSucessState({required this.client});
+
   @override
-  List<Object> get props => [clients];
+  List<Object> get props => [client];
 }
 
-class ClientInternalSearchDataState extends ClientPageState {
-  final List<Client> clients;
+class ClientInformationEditableChangeState extends ClientPageState {
+  bool isEditable;
 
-  const ClientInternalSearchDataState({required this.clients});
-  @override
-  List<Object> get props => [clients];
+  ClientInformationEditableChangeState({required this.isEditable});
+   @override
+  List<Object> get props => [isEditable];
 }
-
-class UnValidSearchKeyState extends ClientPageState {}

@@ -20,6 +20,5 @@ export 'package:trilling_web/core/presentation/widgets/app_textformfield.dart';
 export 'package:trilling_web/core/utils/colors.dart';
 export 'package:trilling_web/features/client_feature/domain/entities/adresse.dart';
 export 'package:trilling_web/features/client_feature/domain/entities/client.dart';
-export 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
 export 'package:trilling_web/features/client_feature/presentation/widgets/client_table.dart';
 export 'package:trilling_web/features/client_feature/presentation/widgets/header.dart';

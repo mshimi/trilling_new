@@ -4,17 +4,17 @@ import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/auth/domain/entities/appuser.dart';
 import 'package:trilling_web/features/auth/presentation/bloc/home_navigator_bloc/home_navigator_bloc.dart';
 import 'package:trilling_web/features/auth/presentation/home_page/core/side_menu.dart';
+import 'package:trilling_web/features/client_feature/presentation/bloc/clients_page_bloc/clients_page_bloc.dart';
 
-import 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
-import 'package:trilling_web/features/client_feature/presentation/pages/client_page.dart';
-import 'package:trilling_web/features/core_feature/presentation/bloc/core_bloc.dart';
+import 'package:trilling_web/features/client_feature/presentation/pages/clients_page.dart';
+import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/core_feature/presentation/pages/admin_page.dart';
 
 import 'package:trilling_web/injection.dart';
 
 class HomePage extends StatelessWidget {
- final AppUser? appUser;
-const  HomePage({
+  final AppUser? appUser;
+  const HomePage({
     Key? key,
     this.appUser,
   }) : super(key: key);
@@ -29,11 +29,11 @@ const  HomePage({
 
     List sideMenuList = [
       {'text': 'Home', 'icon': Icons.home, 'page': const Placeholder()},
-      {'text': 'Kunden', 'icon': Icons.people, 'page': const ClientPage()},
+      {'text': 'Kunden', 'icon': Icons.people, 'page': const ClientsPage()},
       {
         'text': 'Product',
         'icon': Icons.shopping_cart_rounded,
-        'page':const Placeholder()
+        'page': const Placeholder()
       },
       {
         'text': 'Admin',
@@ -52,7 +52,7 @@ const  HomePage({
           lazy: false,
         ),
         BlocProvider(
-          create: (context) => sl.get<ClientPageBloc>(),
+          create: (context) => sl.get<ClientsPageBloc>(),
         )
       ],
       child: Scaffold(

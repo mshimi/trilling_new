@@ -23,8 +23,8 @@ class Order {
   List<Collection>? collections;
   List<Product> products;
   CreationInfo creationInfo;
-  Transfer abholung;
-  Transfer bringen;
+    Transfer abholung;
+    Transfer bringen;
   bool collectionBooked;
   bool delivaryBooked;
   String? notes;

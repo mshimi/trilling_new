@@ -23,13 +23,13 @@ class NewClientPage extends StatelessWidget {
             district: '',
             houseNumber: '12'),
         createdBy: 'createdBy',
-        createdOn: 'createdOn');
+        createdOn: DateTime.now());
     return BlocProvider(
       create: (context) => sl.get<NewClientBloc>(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey,
-          title:const Text('Herstellen neuen Kunde'),
+          title: const Text('Herstellen neuen Kunde'),
         ),
         body: BlocBuilder<NewClientBloc, NewClientState>(
           builder: (context, state) {
@@ -39,13 +39,11 @@ class NewClientPage extends StatelessWidget {
                     .add(InputValueChanged(email: value));
               },
               maxLines: 1,
-              validator: (value) {
-                
-              },
-              decoration:const InputDecoration(
+              validator: (value) {},
+              decoration: const InputDecoration(
                 labelText: 'Name',
               ),
-              toolbarOptions:const ToolbarOptions(),
+              toolbarOptions: const ToolbarOptions(),
             );
           },
         ),

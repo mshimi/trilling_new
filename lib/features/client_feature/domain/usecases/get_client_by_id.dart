@@ -10,7 +10,7 @@ class GetClientsByIdUseCase {
 
   GetClientsByIdUseCase({required this.clientRepository});
 
-  Future<Either<Failure, List<ClientModel>>> call({int limit = 100, required String keyword}) async {
-    return await clientRepository.getClientbydistrict(keyword: keyword);
+  Future<Either<Failure, ClientModel>> call({int limit = 100, required String keyword}) async {
+    return await clientRepository.getClientbyId(keyword: keyword);
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:trilling_web/core/utils/enums.dart';
 import 'package:trilling_web/features/client_feature/data/models/client_model.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
@@ -126,9 +125,12 @@ class ClientImp implements ClientRepository {
           .where('name', isGreaterThanOrEqualTo: keyword)
           .get();
 
-      return Right(querySnapshot.docs
-          .map((e) => ClientModel.fromMap(e.data()))
-          .toList());
+      return Right(querySnapshot.docs.map((e) {
+        print(e.data());
+        print(ClientModel.fromMap(e.data()).toString());
+
+        return ClientModel.fromMap(e.data());
+      }).toList());
     } catch (e) {
       return Left(StoreFailure());
     }
@@ -159,8 +161,7 @@ class ClientImp implements ClientRepository {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
-          .where('clientAdresse',
-              isGreaterThanOrEqualTo: {'city': 'Herne'}).get();
+          .where('clientAdresse', isEqualTo: {'city': keyword}).get();
 
       List<ClientModel> listOfClientModel = [];
       for (var doc in querySnapshot.docs) {
@@ -176,18 +177,15 @@ class ClientImp implements ClientRepository {
   }
 
   @override
-  Future<Either<Failure, List<ClientModel>>> getClientbyId(
+  Future<Either<Failure, ClientModel>> getClientbyId(
       {required String keyword}) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await firestore
           .appCollection(dbCollections: DbCollections.client)
-          .limit(20)
-          .where('id', isGreaterThanOrEqualTo: keyword)
+          .doc(keyword)
           .get();
 
-      return Right(querySnapshot.docs
-          .map((e) => ClientModel.fromMap(e.data()))
-          .toList());
+      return Right(ClientModel.fromMap(documentSnapshot.data()!));
     } catch (e) {
       return Left(StoreFailure());
     }

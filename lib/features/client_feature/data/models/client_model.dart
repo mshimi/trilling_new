@@ -11,23 +11,28 @@ import '../../domain/entities/adresse.dart';
 class ClientModel {
   String name;
   String firstName;
+  String email;
+  String telephone;
   String id;
   AdresseModel clientAdresse;
   List<AdresseModel>? deliveryAdresse;
   String createdBy;
-  String createdOn;
+  DateTime createdOn;
   String city;
   String district;
-  ClientModel(
-      {required this.name,
-      required this.firstName,
-      required this.id,
-      required this.clientAdresse,
-      this.deliveryAdresse,
-      required this.createdBy,
-      required this.createdOn,
-      required this.city,
-      required this.district});
+  ClientModel({
+    required this.name,
+    required this.firstName,
+    required this.id,
+    required this.clientAdresse,
+    this.deliveryAdresse,
+    required this.createdBy,
+    required this.createdOn,
+    required this.city,
+    required this.district,
+    required this.email,
+    required this.telephone,
+  });
 
   ClientModel copyWith({
     String? name,
@@ -39,15 +44,19 @@ class ClientModel {
     String? createdOn,
     String? city,
     String? district,
+    String? email,
+    String? telephone,
   }) {
     return ClientModel(
+      email: email ?? this.email,
+      telephone: telephone ?? this.telephone,
       name: name ?? this.name,
       firstName: firstName ?? this.firstName,
       id: id ?? this.id,
       clientAdresse: clientAdresse ?? this.clientAdresse,
       deliveryAdresse: deliveryAdresse ?? this.deliveryAdresse,
       createdBy: createdBy ?? this.createdBy,
-      createdOn: createdOn ?? this.createdOn,
+      createdOn: this.createdOn,
       city: city ?? this.city,
       district: district ?? this.district,
     );
@@ -55,13 +64,15 @@ class ClientModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'telephone': telephone,
+      'email': email,
       'name': name,
       'firstName': firstName,
       'id': id,
       'clientAdresse': clientAdresse.toMap(),
       'deliveryAdresse': deliveryAdresse?.map((x) => x.toMap()).toList(),
       'createdBy': createdBy,
-      'createdOn': createdOn,
+      'createdOn': createdOn.millisecondsSinceEpoch,
       'city': city,
       'district': district,
     };
@@ -113,6 +124,8 @@ class ClientModel {
           deliveryAdressetfromDomain.add(AdresseModel.fromDomain(adresse)));
     }
     return ClientModel(
+        email: client.email ?? '',
+        telephone: client.telephone ?? '',
         name: client.name.toLowerCase(),
         firstName: client.firstName.toLowerCase(),
         id: client.id,
@@ -132,17 +145,21 @@ class ClientModel {
     }
 
     return Client(
+      email: email,
+      telephone: telephone,
         firstName: '${firstName[0].toUpperCase()}${firstName.substring(1)}',
         name: '${name[0].toUpperCase()}${name.substring(1)}',
         id: id,
         deliveryAdresse: deliveryAdressetoDomain,
         clientAdresse: clientAdresse.toDomain(),
         createdBy: createdBy,
-        createdOn: createdOn);
+        createdOn: DateTime.now());
   }
 
   factory ClientModel.fromMap(Map<String, dynamic> map) {
     return ClientModel(
+      email: map['email'] ?? '',
+      telephone: map['telephone'] ?? '',
       name: map['name'] ?? '',
       firstName: map['firstName'] ?? '',
       id: map['id'] ?? '',
@@ -152,7 +169,7 @@ class ClientModel {
               map['deliveryAdresse']?.map((x) => AdresseModel.fromMap(x)))
           : null,
       createdBy: map['createdBy'] ?? '',
-      createdOn: map['createdOn'] ?? '',
+      createdOn: DateTime.fromMillisecondsSinceEpoch(map['createdOn']),
       city: map['city'] ?? '',
       district: map['district'] ?? '',
     );

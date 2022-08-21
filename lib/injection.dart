@@ -20,12 +20,15 @@ import 'package:trilling_web/features/client_feature/domain/usecases/get_client_
 import 'package:trilling_web/features/client_feature/domain/usecases/get_concerned_client.dart';
 import 'package:trilling_web/features/client_feature/domain/usecases/update_client_data.dart';
 import 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
+import 'package:trilling_web/features/client_feature/presentation/bloc/clients_page_bloc/clients_page_bloc.dart';
 import 'package:trilling_web/features/client_feature/presentation/bloc/new_client_bloc/new_client_bloc.dart';
 import 'package:trilling_web/features/core_feature/data/repositories/core_data_imp.dart';
 import 'package:trilling_web/features/core_feature/domain/repositories/core_data_repo.dart';
 import 'package:trilling_web/features/core_feature/domain/usecases/get_core_data_usecase.dart';
 import 'package:trilling_web/features/core_feature/domain/usecases/update_core_data_usecase.dart';
-import 'package:trilling_web/features/core_feature/presentation/bloc/core_bloc.dart';
+import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
+import 'package:trilling_web/features/order_feature/data/repositories/order_repository_imp.dart';
+import 'package:trilling_web/features/order_feature/domain/repositories/order_repository.dart';
 import 'package:trilling_web/features/product_feature/domain/repositories/product_repository.dart';
 import 'package:trilling_web/features/product_feature/data/repositories/product_imp.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
@@ -41,10 +44,11 @@ Future<void> init() async {
 
   /* Core useCases */
 
-  sl.registerLazySingleton<GetCoreDataUseCase>(() => GetCoreDataUseCase(coreDataRepo: sl.get()));
+  sl.registerLazySingleton<GetCoreDataUseCase>(
+      () => GetCoreDataUseCase(coreDataRepo: sl.get()));
 
-    sl.registerLazySingleton<UpdateCoreDataUseCase>(() => UpdateCoreDataUseCase(coreDataRepo: sl.get()));
-
+  sl.registerLazySingleton<UpdateCoreDataUseCase>(
+      () => UpdateCoreDataUseCase(coreDataRepo: sl.get()));
 
 //? auth
 
@@ -57,6 +61,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<ProductRepository>(
       () => ProductImp(firestore: sl.get()));
+
+  sl.registerLazySingleton<OrderRepository>(
+      () => OrderImp(firestore: sl.get()));
 
   /* product UseCases  */
 
@@ -106,16 +113,21 @@ Future<void> init() async {
 
   sl.registerFactory<HomeNavigatorBloc>(() => HomeNavigatorBloc());
 
-  sl.registerFactory<CoreBloc>(() => CoreBloc(getCoreDataUseCase: sl.get(), updateCoreDataUseCase: sl.get()));
+  sl.registerFactory<CoreBloc>(() =>
+      CoreBloc(getCoreDataUseCase: sl.get(), updateCoreDataUseCase: sl.get()));
 
-  sl.registerFactory<ClientPageBloc>(() => ClientPageBloc(
+  sl.registerFactory<ClientsPageBloc>(() => ClientsPageBloc(
       addNewClientUseCase: sl.get(),
       getAllClientsUseCase: sl.get(),
       getClientsByCityUseCase: sl.get(),
       getClientsByDistrictUseCase: sl.get(),
       getClientsByFirstNameUseCase: sl.get(),
       getClientsByIdUseCase: sl.get(),
-      getClientsByNameUseCase: sl.get()));
+      getClientsByNameUseCase: sl.get(),
+      coreBloc: sl.get()));
+
+  sl.registerFactory<ClientPageBloc>(
+      () => ClientPageBloc(getClientsByIdUseCase: sl.get()));
 
   //! extern
   final friebaseAuth = FirebaseAuth.instance;

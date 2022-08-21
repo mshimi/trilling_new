@@ -7,57 +7,20 @@ abstract class ClientPageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetClientEvent extends ClientPageEvent {
-  @override
-  List<Object> get props => [];
-}
+class GetClientByIdEvent extends ClientPageEvent {
+  String clientId;
 
-class GetSearchByEvent extends ClientPageEvent {
-  final String searchby;
-
-  const GetSearchByEvent({required this.searchby});
-  // @override
-  // List<Object> get props => [searchby];
-}
-
-class SearchClientEvent extends ClientPageEvent {
-  final String searchby;
-  final String searchKey;
-
-  const SearchClientEvent({required this.searchby, required this.searchKey});
+  GetClientByIdEvent({required this.clientId});
 
   @override
-  List<Object> get props => [searchby, searchKey];
+  List<Object> get props => [clientId];
 }
 
-class SearchClientbyNameEvent extends ClientPageEvent {
-  final String searchKey;
-  const SearchClientbyNameEvent({required this.searchKey});
+class EnableEditingClientInformationEvent extends ClientPageEvent {
+   bool isEnabled;
 
-  @override
-  List<Object> get props => [searchKey];
-}
+  EnableEditingClientInformationEvent({required this.isEnabled});
 
-class SearchClientbyFirstNameEvent extends ClientPageEvent {
-  final String searchKey;
-  const SearchClientbyFirstNameEvent({required this.searchKey});
-
-  @override
-  List<Object> get props => [searchKey];
-}
-
-class SearchClientbyCityEvent extends ClientPageEvent {
-  final String searchKey;
-  const SearchClientbyCityEvent({required this.searchKey});
-
-  @override
-  List<Object> get props => [searchKey];
-}
-
-class SearchClientbyDistrictEvent extends ClientPageEvent {
-  final String searchKey;
-  const SearchClientbyDistrictEvent({required this.searchKey});
-
-  @override
-  List<Object> get props => [searchKey];
+    @override
+  List<Object> get props => [isEnabled];
 }

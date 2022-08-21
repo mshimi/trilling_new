@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:trilling_web/features/client_feature/export.dart';
+import 'package:trilling_web/features/client_feature/presentation/bloc/clients_page_bloc/clients_page_event.dart';
+import 'package:trilling_web/features/core_feature/data/models/core_data_model.dart';
+import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 
-import 'package:trilling_web/core/presentation/widgets/app_dorpdown_button.dart';
-import 'package:trilling_web/core/presentation/widgets/app_elevatedbutton.dart';
-import 'package:trilling_web/core/presentation/widgets/app_textformfield.dart';
-import 'package:trilling_web/core/utils/colors.dart';
-import 'package:trilling_web/features/client_feature/presentation/bloc/client_page_bloc/client_page_bloc.dart';
+import '../bloc/clients_page_bloc/clients_page_bloc.dart';
 
 class ClientTableHeader extends StatelessWidget {
   final double width;
   final double height;
-  final ClientPageBloc clientPageBloc;
+  final ClientsPageBloc clientPageBloc;
   const ClientTableHeader({
     Key? key,
     required this.width,
@@ -35,7 +35,7 @@ class ClientTableHeader extends StatelessWidget {
         .toList();
 
     return SizedBox(
-      height: height * 0.05,
+      height: height,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,8 +61,8 @@ class ClientTableHeader extends StatelessWidget {
               const SizedBox(
                 width: 3,
               ),
-              searchField(clientPageBloc.searchby),
-                const SizedBox(
+              searchField(clientPageBloc.searchby, context),
+              const SizedBox(
                 width: 3,
               ),
               IconButton(
@@ -86,11 +86,52 @@ class ClientTableHeader extends StatelessWidget {
     );
   }
 
-  Widget searchField(String searchDropDown) {
+  Widget searchField(String searchDropDown, BuildContext context) {
     if (searchDropDown == 'Stadt') {
-      return Container();
+      List<String> cities =
+          CoreDataModel.fromDomain(BlocProvider.of<CoreBloc>(context).coreData)
+              .cities
+              .map((e) => e.name)
+              .toList();
+
+      List<DropdownMenuItem<String>> citiesDropDown = cities
+          .map((e) =>  DropdownMenuItem(
+                child: Text(e),
+                value: e,
+              ))
+          .toList();
+
+      clientPageBloc.selectedCity = cities[0];
+      return AppDorpDownButton(
+        onChanged: (value) {
+          clientPageBloc.selectedCity = value.toString();
+        },
+        dropDownMenuItems: citiesDropDown,
+        value: clientPageBloc.selectedCity,
+        width: width * 0.20,
+      );
     } else if (searchDropDown == 'Stadtteil') {
-      return Container();
+      List<String> districts =
+          CoreDataModel.fromDomain(BlocProvider.of<CoreBloc>(context).coreData)
+              .getAllDistrictsNames();
+
+      List<DropdownMenuItem<String>> districtsDropDown = districts
+          .map((e) => DropdownMenuItem(
+                child: Text(e),
+                value: e,
+              ))
+          .toList();
+
+      clientPageBloc.selectedDistrict = districts[0];
+
+      return AppDorpDownButton(
+        onChanged: (value) {
+          clientPageBloc.selectedDistrict = value.toString();
+        },
+        dropDownMenuItems: districtsDropDown,
+        value: clientPageBloc.selectedDistrict,
+        width: width * 0.20,
+      );
     } else {
       return AppTextFormField(
         labelText: 'Suchen',

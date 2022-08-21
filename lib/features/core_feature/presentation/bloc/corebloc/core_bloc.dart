@@ -7,6 +7,7 @@ import 'package:trilling_web/core/failures/store_failure.dart';
 import 'package:trilling_web/features/core_feature/data/repositories/city_table_builder.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/city.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/core_data.dart';
+import 'package:trilling_web/features/core_feature/domain/entities/district.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/product_category.dart';
 import 'package:trilling_web/features/core_feature/domain/usecases/get_core_data_usecase.dart';
 import 'package:trilling_web/features/core_feature/domain/usecases/update_core_data_usecase.dart';
@@ -47,6 +48,61 @@ class CoreBloc extends Bloc<CoreEvent, CoreState> {
           .buildDataRow();
       emit(CityIndexChangedState(index: event.index));
     });
+
+    on<DistrictDeletedEvent>((event, emit) async {
+      if (coreData.cities[selectedCityIndex].districts[event.districtIndex] !=
+          newDistrict) {
+        coreData.cities[selectedCityIndex].districts
+            .removeAt(event.districtIndex);
+        Either<Failure, Unit> eitherFailureOrUnit = await updateCoreDataUseCase
+            .call(coreDataModel: CoreDataModel.fromDomain(coreData));
+
+        if (eitherFailureOrUnit.isLeft()) {
+          //TODO: in case of Failure
+
+        }
+      } else {
+        coreData.cities[selectedCityIndex].districts
+            .removeAt(event.districtIndex);
+      }
+
+      emit(DistrictUpdatedState(districtIndex: event.districtIndex));
+    });
+
+    on<DistrictChangedEvent>((event, emit) async {
+      coreData.cities[selectedCityIndex].districts[event.districtIndex]
+          .transferPrice = event.transferPrice;
+
+      Either<Failure, Unit> eitherFailureOrUnit = await updateCoreDataUseCase
+          .call(coreDataModel: CoreDataModel.fromDomain(coreData));
+
+      if (eitherFailureOrUnit.isLeft()) {
+        //TODO: in case of Failure
+
+      }
+    });
+
+    on<AddNewDistrictEvent>((event, emit) {
+      if (!coreData.cities[selectedCityIndex].districts.contains(newDistrict)) {
+        coreData.cities[selectedCityIndex].districts.add(newDistrict);
+
+        emit(AddNewDistrictState());
+      }
+    });
+
+    on<ValidateNewDistrictValuesAndUpdateCoreDataEvent>((event, emit) async {
+      coreData.cities[selectedCityIndex].districts[event.index] =
+          event.district;
+
+      Either<Failure, Unit> eitherFailureOrUnit = await updateCoreDataUseCase
+          .call(coreDataModel: CoreDataModel.fromDomain(coreData));
+
+      if (eitherFailureOrUnit.isLeft()) {
+        //TODO: in case of Failure
+
+      }
+      emit(DistrictUpdatedState(districtIndex: event.index));
+    });
   }
 
   late final CoreData coreData;
@@ -57,4 +113,6 @@ class CoreBloc extends Bloc<CoreEvent, CoreState> {
   String selectedCity = '';
   int selectedCityIndex = 0;
   List<DataRow> districtsDataRow = [];
+
+  District newDistrict = District(name: 'Stadtteil', transferPrice: 0);
 }

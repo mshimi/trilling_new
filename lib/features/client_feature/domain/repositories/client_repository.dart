@@ -32,7 +32,7 @@ Done
   Future<Either<Failure, List<ClientModel>>> getConcernedClient(
       {required String keyword});
 
-      Future<Either<Failure, List<ClientModel>>> getClientbyId(
+      Future<Either<Failure, ClientModel>> getClientbyId(
       {required String keyword});
 }
 

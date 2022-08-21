@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:trilling_web/features/client_feature/presentation/pages/client_page.dart';
+import 'package:trilling_web/features/client_feature/presentation/pages/clients_page.dart';
 
 part 'home_navigator_event.dart';
 part 'home_navigator_state.dart';
@@ -23,7 +23,7 @@ class HomeNavigatorBloc extends Bloc<HomeNavigatorEvent, HomeNavigatorState> {
     {
       'text': 'Kunden',
       'icon': Icons.people,
-      'page':const ClientPage(),
+      'page':const ClientsPage(),
     },
     {
       'text': 'Product',
