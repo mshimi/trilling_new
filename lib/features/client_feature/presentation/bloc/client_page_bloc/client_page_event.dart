@@ -16,11 +16,46 @@ class GetClientByIdEvent extends ClientPageEvent {
   List<Object> get props => [clientId];
 }
 
+class GetClientFromPage extends ClientPageEvent {
+  Client client;
+
+  GetClientFromPage({required this.client});
+
+  @override
+  List<Object> get props => [client];
+}
+
+class GetClientOrderEvent extends ClientPageEvent {
+  String clientId;
+  GetClientOrderEvent({required this.clientId});
+  @override
+  List<Object> get props => [clientId];
+}
+
 class EnableEditingClientInformationEvent extends ClientPageEvent {
-   bool isEnabled;
+  bool isEnabled;
 
   EnableEditingClientInformationEvent({required this.isEnabled});
 
-    @override
+  @override
   List<Object> get props => [isEnabled];
+}
+
+class UpdateClientInformationEvent extends ClientPageEvent {
+  Client oldClientData;
+
+  UpdateClientInformationEvent({required this.oldClientData});
+
+  @override
+  List<Object> get props => [oldClientData];
+}
+
+class CityChangedEvent extends ClientPageEvent {
+  String city;
+  CoreData coreData;
+
+  CityChangedEvent({required this.city, required this.coreData});
+
+  @override
+  List<Object> get props => [city];
 }

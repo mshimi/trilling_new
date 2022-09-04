@@ -29,6 +29,19 @@ import 'package:trilling_web/features/core_feature/domain/usecases/update_core_d
 import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/order_feature/data/repositories/order_repository_imp.dart';
 import 'package:trilling_web/features/order_feature/domain/repositories/order_repository.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/add_new_order.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_all_order_by_day.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_cancelled_orders.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_not_delivered_orders.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_order_by_Id.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_orders_by_bookingdate.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_orders_by_client.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_orders_for_spacific_period.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_ready_orders.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_uncollected_orders.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/get_unpaid_orders.dart';
+import 'package:trilling_web/features/order_feature/domain/usecases/update_order.dart';
+import 'package:trilling_web/features/order_feature/presentation/bloc/orders_bloc/orders_bloc.dart';
 import 'package:trilling_web/features/product_feature/domain/repositories/product_repository.dart';
 import 'package:trilling_web/features/product_feature/data/repositories/product_imp.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
@@ -104,6 +117,34 @@ Future<void> init() async {
 
   sl.registerLazySingleton<InputValidatorRepository>(() => InputValidatorImp());
 
+  /* Orders UseCases */
+
+  sl.registerLazySingleton<AddNewOrderUseCase>(
+      () => AddNewOrderUseCase(orderRepository: sl.get()));
+
+  sl.registerLazySingleton<GetAllOrdersByDayUseCase>(
+      () => GetAllOrdersByDayUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetCancelledOrdersUseCase>(
+      () => GetCancelledOrdersUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetUnDeliveredOrdersUseCase>(
+      () => GetUnDeliveredOrdersUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetOrderByIdUseCase>(
+      () => GetOrderByIdUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetOrdesByBookingDateUseCase>(
+      () => GetOrdesByBookingDateUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetOrdersByClientUseCase>(
+      () => GetOrdersByClientUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetOrdesForSpacificPeriodUseCase>(
+      () => GetOrdesForSpacificPeriodUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetReadyOrdersUseCase>(
+      () => GetReadyOrdersUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetUnCollectedOrdersUseCase>(
+      () => GetUnCollectedOrdersUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<GetUnPaidOrdersUseCase>(
+      () => GetUnPaidOrdersUseCase(orderRepository: sl.get()));
+  sl.registerLazySingleton<UpdateAnOrderUseCase>(
+      () => UpdateAnOrderUseCase(orderRepository: sl.get()));
+
   //bloc
 
   sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
@@ -116,6 +157,8 @@ Future<void> init() async {
   sl.registerFactory<CoreBloc>(() =>
       CoreBloc(getCoreDataUseCase: sl.get(), updateCoreDataUseCase: sl.get()));
 
+  sl.registerFactory<OrdersBloc>(() => OrdersBloc( getAllOrdersByDayUseCase: sl.get()));
+
   sl.registerFactory<ClientsPageBloc>(() => ClientsPageBloc(
       addNewClientUseCase: sl.get(),
       getAllClientsUseCase: sl.get(),
@@ -126,8 +169,10 @@ Future<void> init() async {
       getClientsByNameUseCase: sl.get(),
       coreBloc: sl.get()));
 
-  sl.registerFactory<ClientPageBloc>(
-      () => ClientPageBloc(getClientsByIdUseCase: sl.get()));
+  sl.registerFactory<ClientPageBloc>(() => ClientPageBloc(
+      getClientsByIdUseCase: sl.get(),
+      getOrdersByClientUseCase: sl.get(),
+      updateClientDataUseCase: sl.get()));
 
   //! extern
   final friebaseAuth = FirebaseAuth.instance;

@@ -145,8 +145,8 @@ class ProductModel extends Equatable {
   Product toDomain() {
     List<ProductCapicity> listOfDomain = [];
     for (var element in productCapicites) {
-        listOfDomain.add(element.toDomain());
-      }
+      listOfDomain.add(element.toDomain());
+    }
 
     return Product(
       pricePerPerson: pricePerPerson,
@@ -161,6 +161,4 @@ class ProductModel extends Equatable {
       allergySubstances: allergySubstances,
     );
   }
-
-  
 }

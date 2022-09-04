@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:trilling_web/features/core_feature/data/models/city_model.dart';
 import 'package:trilling_web/features/core_feature/data/models/district_model.dart';
 import 'package:trilling_web/features/core_feature/data/models/product_category_model.dart';
+import 'package:trilling_web/features/core_feature/domain/entities/city.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/core_data.dart';
 import 'package:trilling_web/features/product_feature/data/models/packung_model.dart';
 
@@ -109,5 +111,16 @@ class CoreDataModel {
 
   List<String> getAllDistrictsNamesForCity(CityModel cityModel) {
     return cityModel.districts.map((e) => e.name).toList();
+  }
+
+  City getCurrentCity(String cityName) {
+    City city = cities[0].toDomain();
+    for (var i = 0; i < cities.length; i++) {
+      if (cities[i].name == cityName) {
+        city = cities[i].toDomain();
+        break;
+      }
+    }
+    return city;
   }
 }

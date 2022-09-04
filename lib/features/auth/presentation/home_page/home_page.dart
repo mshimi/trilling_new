@@ -9,6 +9,7 @@ import 'package:trilling_web/features/client_feature/presentation/bloc/clients_p
 import 'package:trilling_web/features/client_feature/presentation/pages/clients_page.dart';
 import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/core_feature/presentation/pages/admin_page.dart';
+import 'package:trilling_web/features/order_feature/presentation/pages/order_page/orders_page.dart';
 
 import 'package:trilling_web/injection.dart';
 
@@ -31,6 +32,11 @@ class HomePage extends StatelessWidget {
       {'text': 'Home', 'icon': Icons.home, 'page': const Placeholder()},
       {'text': 'Kunden', 'icon': Icons.people, 'page': const ClientsPage()},
       {
+        'text': 'Besellungen',
+        'icon': Icons.shopping_cart,
+        'page': const OrdersPage()
+      },
+      {
         'text': 'Product',
         'icon': Icons.shopping_cart_rounded,
         'page': const Placeholder()
@@ -43,10 +49,6 @@ class HomePage extends StatelessWidget {
     ];
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => sl.get<CoreBloc>()..add(GetCoreDataEvent()),
-          lazy: false,
-        ),
         BlocProvider(
           create: (context) => sl.get<HomeNavigatorBloc>(),
           lazy: false,

@@ -39,7 +39,14 @@ class CityModel {
       'name': name,
       'districts': districts.map((x) => x.toMap()).toList(),
     };
+
+  
+
+
+
+
   }
+
 
   factory CityModel.fromMap(Map<String, dynamic> map) {
     return CityModel(

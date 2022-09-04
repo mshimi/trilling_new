@@ -7,11 +7,11 @@ import 'package:trilling_web/features/client_feature/presentation/bloc/client_pa
 import 'package:trilling_web/features/client_feature/presentation/widgets/client_page_contact_infomation.dart';
 import 'package:trilling_web/features/client_feature/presentation/widgets/client_page_delivery_adresse_table.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order.dart';
-import 'package:trilling_web/features/order_feature/domain/entities/transfer.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
+
 import 'package:trilling_web/injection.dart';
 
 import '../../../../core/utils/colors.dart';
+import '../../../core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import '../../domain/entities/client.dart';
 
 class ClientPage extends StatelessWidget {
@@ -24,9 +24,13 @@ class ClientPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = context.getWidth();
     double height = context.getHeight();
+    CoreBloc coreBloc = BlocProvider.of<CoreBloc>(context);
+
+    print(client);
 
     return BlocProvider(
-      create: (context) => sl.get<ClientPageBloc>(),
+      create: (context) =>
+          sl.get<ClientPageBloc>()..add(GetClientByIdEvent(clientId: clientId)),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Kunde: $clientId '),
@@ -37,123 +41,118 @@ class ClientPage extends StatelessWidget {
           builder: (context, state) {
             ClientPageBloc clientPageBloc =
                 BlocProvider.of<ClientPageBloc>(context);
-            if (clientPageBloc.client == null && client == null) {
+            // if (clientPageBloc.client == null && client == null) {
+            //   print('(clientPageBloc.client == null && client == null)');
+            //   clientPageBloc.add(GetClientByIdEvent(clientId: clientId));
+            //   return const Center(
+            //     child: CircularProgressIndicator(),
+            //   );
+            // } else if (client == null) {
+            //   print('(client == null)');
+            //   clientPageBloc.add(GetClientOrderEvent(clientId: clientId));
+            // }
+            bool isEnabled = clientPageBloc.isEnabled;
+            client = clientPageBloc.client;
+
+            // clientPageBloc.client = client;
+
+            if (client == null) {
               clientPageBloc.add(GetClientByIdEvent(clientId: clientId));
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            bool isEnabled = clientPageBloc.isEnabled;
-            client ??= clientPageBloc.client;
-
-            return ListView(children: [
-              Container(
-                margin: const EdgeInsets.all(12),
-                width: width,
-                height: height * 0.55,
-                child: Row(
-                  children: [
-                    ClientPageContactInfomation(
+            } else {
+              return ListView(children: [
+                Container(
+                  margin: const EdgeInsets.all(12),
+                  width: width,
+                  height: height * 0.55,
+                  child: Row(
+                    children: [
+                      ClientPageContactInfomation(
                         onEdit: () {
-                          if (!clientPageBloc.isEnabled) {
-                            clientPageBloc.isEnabled =
-                                !clientPageBloc.isEnabled;
-                            clientPageBloc.add(
-                                EnableEditingClientInformationEvent(
-                                    isEnabled: clientPageBloc.isEnabled));
-                          }
-                          else{
-                            
-
-                            clientPageBloc.isEnabled =
-                                !clientPageBloc.isEnabled;
-                                clientPageBloc.add(
-                                EnableEditingClientInformationEvent(
-                                    isEnabled: clientPageBloc.isEnabled));
-                          }
+                          clientPageBloc.isEnabled = !clientPageBloc.isEnabled;
+                          clientPageBloc.city = client!.clientAdresse.city;
+                          clientPageBloc.add(
+                              EnableEditingClientInformationEvent(
+                                  isEnabled: clientPageBloc.isEnabled));
+                        },
+                        onCancel: () {
+                          clientPageBloc.isEnabled = !clientPageBloc.isEnabled;
+                          clientPageBloc.add(
+                              EnableEditingClientInformationEvent(
+                                  isEnabled: clientPageBloc.isEnabled));
+                        },
+                        onSave: () {
+                          clientPageBloc.add(UpdateClientInformationEvent(
+                              oldClientData: client!));
+                          client = null;
                         },
                         client: client!,
                         height: height,
                         isEnabled: isEnabled,
-                        width: width),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    ClientPageDeliveryAdresse(
-                      client: client!,
-                      width: width,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: blueColor1),
-                    borderRadius: BorderRadius.circular(8)),
-                margin: const EdgeInsets.all(12),
-                width: width,
-                height: height * 0.70,
-                child: NativeDataTable.builder(
-                    header: Text(
-                      'Bestellungen',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(color: blueColor1),
-                    ),
-                    columns: const [
-                      DataColumn(label: Text('Index')),
-                      DataColumn(label: Text('Bestellungsdatum')),
-                      DataColumn(label: Text('Price')),
-                      DataColumn(label: Text('LieferDatum')),
-                      DataColumn(label: Text('bringen')),
-                      DataColumn(label: Text('bezahlt')),
-                      DataColumn(label: Text('Bestellungsdatum'))
+                        width: width,
+                        cityController: clientPageBloc.cityCodeController,
+                        emailController: clientPageBloc.emailController,
+                        firstNameController: clientPageBloc.firstNameController,
+                        housNumberController:
+                            clientPageBloc.housNumberController,
+                        nameController: clientPageBloc.nameController,
+                        streetController: clientPageBloc.streetController,
+                        telephoneController: clientPageBloc.telephoneController,
+                        zipCodeController: clientPageBloc.zipCodeController,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      ClientPageDeliveryAdresse(
+                        client: client!,
+                        width: width,
+                      ),
                     ],
-                    itemCount: 1,
-                    itemBuilder: (index) {
-                      var order = Order(
-                          isCancelled: false,
-                          isReady: false,
-                          isDelivared: false,
-                          iscollected: false,
-                          isPaid: false,
-                          totalItems: 10,
-                          totalPrice: 20,
-                          bookingDate: DateTime.now(),
-                          eventDate: DateTime.now(),
-                          delivaryAdresse: client!.clientAdresse,
-                          client: client!,
-                          creationInfo: CreationInfo(
-                              userName: 'userName',
-                              userId: 'userId',
-                              creationDate: DateTime.now()),
-                          abholung: Transfer(
-                              driver: 'driver',
-                              transferDate: DateTime.now(),
-                              timeFrom: DateTime.now(),
-                              timeTo: DateTime.now()),
-                          bringen: Transfer(
-                              driver: 'driver',
-                              transferDate: DateTime.now(),
-                              timeFrom: DateTime.now(),
-                              timeTo: DateTime.now()),
-                          collectionBooked: true,
-                          delivaryBooked: true,
-                          products: []);
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: blueColor1),
+                      borderRadius: BorderRadius.circular(8)),
+                  margin: const EdgeInsets.all(12),
+                  width: width,
+                  height: height * 0.70,
+                  child: NativeDataTable.builder(
+                      header: Text(
+                        'Bestellungen',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: blueColor1),
+                      ),
+                      columns: const [
+                        DataColumn(label: Text('Index')),
+                        DataColumn(label: Text('Bestellungsdatum')),
+                        DataColumn(label: Text('Price')),
+                        DataColumn(label: Text('LieferDatum')),
+                        DataColumn(label: Text('bringen')),
+                        DataColumn(label: Text('bezahlt')),
+                        DataColumn(label: Text('Bestellungsdatum'))
+                      ],
+                      itemCount: clientPageBloc.orders.length,
+                      itemBuilder: (index) {
+                        Order order = clientPageBloc.orders[index];
 
-                      return DataRow(cells: [
-                        DataCell(Text(index.toString())),
-                        DataCell(Text(order.bookingDate.getStringDate())),
-                        DataCell(Text(order.totalPrice.toString())),
-                        DataCell(Text(order.eventDate.getStringDate())),
-                        DataCell(Text(index.toString())),
-                        DataCell(Text(index.toString())),
-                        DataCell(Text(index.toString())),
-                      ]);
-                    }),
-              ),
-            ]);
+                        return DataRow(cells: [
+                          DataCell(Text(index.toString())),
+                          DataCell(Text(order.bookingDate.getStringDate())),
+                          DataCell(Text(order.totalPrice.toString())),
+                          DataCell(Text(order.eventDate.getStringDate())),
+                          DataCell(Text(index.toString())),
+                          DataCell(Text(index.toString())),
+                          DataCell(Text(index.toString())),
+                        ]);
+                      }),
+                ),
+              ]);
+            }
           },
         ),
       ),

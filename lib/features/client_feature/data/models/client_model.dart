@@ -73,8 +73,8 @@ class ClientModel {
       'deliveryAdresse': deliveryAdresse?.map((x) => x.toMap()).toList(),
       'createdBy': createdBy,
       'createdOn': createdOn.millisecondsSinceEpoch,
-      'city': city,
-      'district': district,
+      'city': clientAdresse.city,
+      'district': clientAdresse.district,
     };
   }
 
@@ -145,8 +145,8 @@ class ClientModel {
     }
 
     return Client(
-      email: email,
-      telephone: telephone,
+        email: email,
+        telephone: telephone,
         firstName: '${firstName[0].toUpperCase()}${firstName.substring(1)}',
         name: '${name[0].toUpperCase()}${name.substring(1)}',
         id: id,

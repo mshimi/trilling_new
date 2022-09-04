@@ -146,16 +146,30 @@ class OrderModel extends Equatable {
       totalPrice: map['totalPrice']?.toDouble() ?? 0.0,
       bookingDate: DateTime.fromMillisecondsSinceEpoch(map['bookingDate']),
       eventDate: DateTime.fromMillisecondsSinceEpoch(map['eventDate']),
-      delivaryAdresse: AdresseModel.fromMap(map['delivaryAdresse']),
+      delivaryAdresse:
+          // AdresseModel(
+          //     city: '', district: '', houseNumber: '', street: '', zipCode: 4456),
+          AdresseModel.fromMap(map['delivaryAdresse']),
       client: ClientModel.fromMap(map['client']),
-      additives: List<String>.from(map['additives']),
-      allergySubstances: List<String>.from(map['allergySubstances']),
-      collections: map['collections'] != null
-          ? List<CollectionModel>.from(
-              map['collections']?.map((x) => CollectionModel.fromMap(x)))
-          : null,
-      products: List<ProductModel>.from(
-          map['products']?.map((x) => ProductModel.fromMap(x))),
+      additives:
+          // [],
+          List<String>.from(map['additives']).isEmpty
+              ? []
+              : List<String>.from(map['additives']),
+      allergySubstances:
+          // [],
+          List<String>.from(map['allergySubstances']),
+      collections:
+          //  [],
+          List<CollectionModel>.from(map['collections']).isNotEmpty
+              ? List<CollectionModel>.from(map['collections']
+                  ?.map((x) => CollectionModel.fromMap(x))).toList()
+              : [],
+      products:
+          // [],
+
+          List<ProductModel>.from(
+              map['products']?.map((x) => ProductModel.fromMap(x))).toList(),
       creationInfo: CreationInfoModel.fromMap(map['creationInfo']),
       abholung: TransferModel.fromMap(map['abholung']),
       bringen: TransferModel.fromMap(map['bringen']),

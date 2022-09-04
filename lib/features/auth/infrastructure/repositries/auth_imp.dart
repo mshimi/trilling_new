@@ -9,10 +9,12 @@ import 'package:dartz/dartz.dart';
 import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
 import 'package:trilling_web/features/auth/infrastructure/model/appuser_model.dart';
 
+import '../../../../injection.dart';
+
 class Auth_Imp implements Auth_Repo {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
-   AppUser? appUser;
+  AppUser? appUser;
   bool _isAuth = false;
   StreamSubscription? streamSubscription;
 
@@ -44,6 +46,8 @@ class Auth_Imp implements Auth_Repo {
           await firebaseFirestore.collection(appUserCollection).doc(uid).get();
 
       AppUser appUser = AppUserModel.fromFirebase(userData).toDomain();
+
+    
 
       this.appUser = appUser;
       return right(appUser);

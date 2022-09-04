@@ -54,10 +54,17 @@ class OrderImp implements OrderRepository {
           .where('eventDate', isGreaterThanOrEqualTo: dateTimeFirebaseValue)
           .get();
 
-      return Right(querySnapshot.docs
-          .map(
-              (documentSnapshot) => OrderModel.fromMap(documentSnapshot.data()))
-          .toList());
+      print(dateTimeFirebaseValue);
+      var i = 1;
+      List<OrderModel> orders = querySnapshot.docs.map((documentSnapshot) {
+        print(documentSnapshot.data());
+        print(i);
+        i++;
+        return OrderModel.fromMap(documentSnapshot.data());
+      }).toList();
+
+      print(orders.length);
+      return Right(orders);
     } catch (e) {
       return Left(StoreFailure());
     }
@@ -137,9 +144,9 @@ class OrderImp implements OrderRepository {
 
   @override
   Future<Either<Failure, List<OrderModel>>> getOrdersPerBookingDate(
-      {required DateTime bookingsDate,required Duration duration}) async {
-  try {
-     int startDate = bookingsDate.millisecondsSinceEpoch;
+      {required DateTime bookingsDate, required Duration duration}) async {
+    try {
+      int startDate = bookingsDate.millisecondsSinceEpoch;
       int endDate = bookingsDate.add(duration).millisecondsSinceEpoch;
 
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
@@ -147,18 +154,18 @@ class OrderImp implements OrderRepository {
           .where('bookingDate', isGreaterThanOrEqualTo: startDate)
           .where('bookingDate', isLessThanOrEqualTo: endDate)
           .get();
-     return Right(querySnapshot.docs
+      return Right(querySnapshot.docs
           .map(
               (documentSnapshot) => OrderModel.fromMap(documentSnapshot.data()))
           .toList());
-  } catch (e) {
-       return Left(StoreFailure());
-  }
+    } catch (e) {
+      return Left(StoreFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<OrderModel>>> getReadyOrders() async {
-  try {
+    try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.orders)
           .where('isReady', isEqualTo: true)
@@ -175,7 +182,7 @@ class OrderImp implements OrderRepository {
 
   @override
   Future<Either<Failure, List<OrderModel>>> getUnPaidOrders() async {
-   try {
+    try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.orders)
           .where('isPaid', isEqualTo: false)
@@ -207,13 +214,13 @@ class OrderImp implements OrderRepository {
     }
   }
 
-    @override
+  @override
   Future<Either<Failure, List<OrderModel>>> getUnCollectedOrders() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
           .appCollection(dbCollections: DbCollections.orders)
-          .where('isDelivared', isEqualTo: true).
-          where('iscollected', isEqualTo: false )
+          .where('isDelivared', isEqualTo: true)
+          .where('iscollected', isEqualTo: false)
           .get();
 
       return Right(querySnapshot.docs
