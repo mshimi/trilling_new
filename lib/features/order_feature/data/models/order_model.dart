@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:trilling_web/features/client_feature/data/models/adresse_model.dart';
 import 'package:trilling_web/features/client_feature/data/models/client_model.dart';
 import 'package:trilling_web/features/order_feature/data/models/collection_model.dart';
+import 'package:trilling_web/features/order_feature/data/models/topfe_model.dart';
 import 'package:trilling_web/features/order_feature/data/models/transfer_model.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order.dart';
 import 'package:trilling_web/features/product_feature/data/models/creation_info_model.dart';
@@ -11,17 +12,17 @@ import 'package:trilling_web/features/product_feature/data/models/product_model.
 
 class OrderModel extends Equatable {
   String? id;
-  bool isCancelled;
-  bool isReady;
-  bool isDelivared;
-  bool iscollected;
-  bool isPaid;
-  int totalItems;
-  double totalPrice;
-  DateTime bookingDate;
-  DateTime eventDate;
-  AdresseModel delivaryAdresse;
-  ClientModel client;
+  bool isCancelled;             //backEnd
+  bool isReady;                 //backEnd
+  bool isDelivared;             //backEnd
+  bool iscollected;               //backEnd
+  bool isPaid;                    //invoice
+  int totalItems;                 //backEnd
+  double totalPrice;                //backEnd
+  DateTime bookingDate;           //backEnd
+  DateTime eventDate;               //general
+  AdresseModel delivaryAdresse;       //list from clientsadresse
+  ClientModel client;                 //from outside
   List<String>? additives;
   List<String>? allergySubstances;
   List<CollectionModel>? collections;
@@ -32,6 +33,7 @@ class OrderModel extends Equatable {
   bool collectionBooked;
   bool delivaryBooked;
   String? notes;
+  TopflisteModel topflisteModel;
   OrderModel({
     this.id,
     required this.isCancelled,
@@ -40,6 +42,7 @@ class OrderModel extends Equatable {
     required this.iscollected,
     required this.isPaid,
     required this.totalItems,
+    required this.topflisteModel,
     required this.totalPrice,
     required this.bookingDate,
     required this.eventDate,
@@ -57,32 +60,33 @@ class OrderModel extends Equatable {
     this.notes,
   });
 
-  OrderModel copyWith({
-    String? id,
-    bool? isCancelled,
-    bool? isReady,
-    bool? isDelivared,
-    bool? iscollected,
-    bool? isPaid,
-    int? totalItems,
-    double? totalPrice,
-    DateTime? bookingDate,
-    DateTime? eventDate,
-    AdresseModel? delivaryAdresse,
-    ClientModel? client,
-    List<String>? additives,
-    List<String>? allergySubstances,
-    List<CollectionModel>? collections,
-    List<ProductModel>? products,
-    CreationInfoModel? creationInfo,
-    TransferModel? abholung,
-    TransferModel? bringen,
-    bool? collectionBooked,
-    bool? delivaryBooked,
-    String? notes,
-  }) {
+  OrderModel copyWith(
+      {String? id,
+      bool? isCancelled,
+      bool? isReady,
+      bool? isDelivared,
+      bool? iscollected,
+      bool? isPaid,
+      int? totalItems,
+      double? totalPrice,
+      DateTime? bookingDate,
+      DateTime? eventDate,
+      AdresseModel? delivaryAdresse,
+      ClientModel? client,
+      List<String>? additives,
+      List<String>? allergySubstances,
+      List<CollectionModel>? collections,
+      List<ProductModel>? products,
+      CreationInfoModel? creationInfo,
+      TransferModel? abholung,
+      TransferModel? bringen,
+      bool? collectionBooked,
+      bool? delivaryBooked,
+      String? notes,
+      TopflisteModel? topflisteModel}) {
     return OrderModel(
       id: id ?? this.id,
+      topflisteModel: topflisteModel ?? this.topflisteModel,
       isCancelled: isCancelled ?? this.isCancelled,
       isReady: isReady ?? this.isReady,
       isDelivared: isDelivared ?? this.isDelivared,
@@ -109,7 +113,7 @@ class OrderModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id': id ?? '',
       'isCancelled': isCancelled,
       'isReady': isReady,
       'isDelivared': isDelivared,
@@ -131,12 +135,14 @@ class OrderModel extends Equatable {
       'collectionBooked': collectionBooked,
       'delivaryBooked': delivaryBooked,
       'notes': notes,
+      'topflisteModel': topflisteModel.toMap()
     };
   }
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'],
+      topflisteModel: TopflisteModel.fromMap(map['topflisteModel'] ),
       isCancelled: map['isCancelled'] ?? false,
       isReady: map['isReady'] ?? false,
       isDelivared: map['isDelivared'] ?? false,
@@ -146,10 +152,7 @@ class OrderModel extends Equatable {
       totalPrice: map['totalPrice']?.toDouble() ?? 0.0,
       bookingDate: DateTime.fromMillisecondsSinceEpoch(map['bookingDate']),
       eventDate: DateTime.fromMillisecondsSinceEpoch(map['eventDate']),
-      delivaryAdresse:
-          // AdresseModel(
-          //     city: '', district: '', houseNumber: '', street: '', zipCode: 4456),
-          AdresseModel.fromMap(map['delivaryAdresse']),
+      delivaryAdresse: AdresseModel.fromMap(map['delivaryAdresse']),
       client: ClientModel.fromMap(map['client']),
       additives:
           // [],
@@ -219,6 +222,7 @@ class OrderModel extends Equatable {
 
   factory OrderModel.fromDomain(Order order) {
     return OrderModel(
+        topflisteModel: TopflisteModel.fromDomain(order.topfliste),
         isCancelled: order.isCancelled,
         isReady: order.isReady,
         isDelivared: order.isDelivared,
@@ -248,6 +252,7 @@ class OrderModel extends Equatable {
 
   Order toDomain() {
     return Order(
+      id: id ?? 'null',
       isCancelled: isCancelled,
       isReady: isReady,
       isDelivared: isDelivared,
@@ -265,6 +270,7 @@ class OrderModel extends Equatable {
       collectionBooked: collectionBooked,
       delivaryBooked: delivaryBooked,
       products: products.map((e) => e.toDomain()).toList(),
+      topfliste: topflisteModel.toDomain(),
     );
   }
 }

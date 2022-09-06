@@ -78,9 +78,13 @@ class ClientTableHeader extends StatelessWidget {
             ],
           ),
           AppElevatedButton(
-              width: width * 0.15,
-              text: 'Kunde hinzufügen',
-              iconData: Icons.add),
+            width: width * 0.15,
+            text: 'Kunde hinzufügen',
+            iconData: Icons.add,
+            onTap: () {
+              GoRouter.of(context).go('/Clients/newClient');
+            },
+          ),
         ],
       ),
     );
@@ -95,7 +99,7 @@ class ClientTableHeader extends StatelessWidget {
               .toList();
 
       List<DropdownMenuItem<String>> citiesDropDown = cities
-          .map((e) =>  DropdownMenuItem(
+          .map((e) => DropdownMenuItem(
                 child: Text(e),
                 value: e,
               ))

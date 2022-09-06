@@ -1,9 +1,9 @@
 import 'package:data_tables/data_tables.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 import 'package:trilling_web/features/order_feature/presentation/bloc/orders_bloc/orders_bloc.dart';
+import 'package:trilling_web/features/order_feature/presentation/widgets/order_table.dart';
 import 'package:trilling_web/injection.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order.dart';
 
@@ -25,15 +25,11 @@ class OrdersPage extends StatelessWidget {
 
           print(orders.length);
 
-          return ListView(
+          return Column(
             children: [
               SizedBox(
                 height: height * 0.8,
-                child: NativeDataTable.builder(
-                    columns: [DataColumn(label: Text(''))],
-                    itemCount: orders.length,
-                    itemBuilder: (index) => DataRow(
-                        cells: [DataCell(Text(orders[index].client.name))])),
+                child: OrderTable(orders: orders) ,
               )
             ],
           );

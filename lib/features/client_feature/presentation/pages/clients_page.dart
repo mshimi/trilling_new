@@ -36,7 +36,7 @@ class ClientsPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).go('/neuerKunde');
+                  GoRouter.of(context).go('');
                 },
                 child: const Text('Kunde hinzufügen'),
               ),

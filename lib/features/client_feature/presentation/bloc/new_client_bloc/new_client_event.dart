@@ -17,3 +17,11 @@ class InputValueChanged extends NewClientEvent {
   @override
   List<Object> get props => [];
 }
+
+class AuftragsGeberChanged extends NewClientEvent {
+  final String auftragsgeberType;
+  AuftragsGeberChanged({required this.auftragsgeberType});
+@override
+  List<Object> get props => [auftragsgeberType];
+
+}

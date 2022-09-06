@@ -1,6 +1,8 @@
 import 'package:trilling_web/features/client_feature/domain/entities/adresse.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
+import 'package:trilling_web/features/order_feature/data/models/topfe_model.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/collection.dart';
+import 'package:trilling_web/features/order_feature/domain/entities/topfliste.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/transfer.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product.dart';
@@ -23,33 +25,35 @@ class Order {
   List<Collection>? collections;
   List<Product> products;
   CreationInfo creationInfo;
-    Transfer abholung;
-    Transfer bringen;
+  Transfer abholung;
+  Transfer bringen;
   bool collectionBooked;
   bool delivaryBooked;
+  Topfliste topfliste;
   String? notes;
-  Order({
-    this.id,
-    required this.isCancelled,
-    required this.isReady,
-    required this.isDelivared,
-    required this.iscollected,
-    required this.isPaid,
-    required this.totalItems,
-    required this.totalPrice,
-    required this.bookingDate,
-    required this.eventDate,
-    required this.delivaryAdresse,
-    required this.client,
-    this.additives,
-    this.allergySubstances,
-    this.collections,
-    required this.creationInfo,
-    required this.abholung,
-    required this.bringen,
-    required this.collectionBooked,
-    required this.delivaryBooked,
-    this.notes,
-    required this.products
-  });
+  Order(
+      {this.id,
+      
+      required this.isCancelled,
+      required this.topfliste,
+      required this.isReady,
+      required this.isDelivared,
+      required this.iscollected,
+      required this.isPaid,
+      required this.totalItems,
+      required this.totalPrice,
+      required this.bookingDate,
+      required this.eventDate,
+      required this.delivaryAdresse,
+      required this.client,
+      this.additives,
+      this.allergySubstances,
+      this.collections,
+      required this.creationInfo,
+      required this.abholung,
+      required this.bringen,
+      required this.collectionBooked,
+      required this.delivaryBooked,
+      this.notes,
+      required this.products});
 }

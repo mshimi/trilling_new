@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
+import 'package:trilling_web/features/order_feature/data/models/topfe_model.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order.dart';
 
 import 'package:trilling_web/features/order_feature/presentation/widgets/liefer_schein_liftside.dart';
 import 'package:trilling_web/features/order_feature/presentation/widgets/liefer_schein_rightside.dart';
 
 import '../../../../core/utils/colors.dart';
-
 
 class LieferScheinPage extends StatelessWidget {
   final Order orderItem;
@@ -31,11 +31,12 @@ class LieferScheinPage extends StatelessWidget {
               height: height,
             )),
         Expanded(
-          flex: 14,
+          flex: 16,
           child: Container(
             color: Colors.white,
             height: height,
             child: SingleChildScrollView(
+              controller: ScrollController(),
               child: Container(
                 height: papirHeight,
                 padding: EdgeInsets.all(10),
@@ -44,10 +45,11 @@ class LieferScheinPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     LiftSideLieferSchein(
-                      height: papirHeight * 0.7, order: orderItem,
+                      height: papirHeight * 0.7,
+                      order: orderItem,
                     ),
                     RightSideLieferSchein(
-                      height: papirHeight * 0.7,
+                      height: papirHeight * 1.5, topfModel: TopflisteModel.fromDomain(orderItem.topfliste),
                     ),
                   ],
                 ),

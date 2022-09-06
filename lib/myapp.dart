@@ -6,10 +6,12 @@ import 'package:trilling_web/features/auth/presentation/home_page/home_page.dart
 import 'package:trilling_web/features/auth/presentation/login_page/login_page.dart';
 import 'package:trilling_web/features/client_feature/export.dart';
 import 'package:trilling_web/features/client_feature/presentation/pages/client_page.dart';
+import 'package:trilling_web/features/client_feature/presentation/pages/new_client_page.dart';
 import 'package:trilling_web/features/order_feature/domain/entities/order.dart'
     as OrderItem;
 import 'package:trilling_web/features/order_feature/domain/entities/transfer.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/liefer_schein_page.dart';
+import 'package:trilling_web/features/order_feature/presentation/pages/new_order_page/new_order_page.dart';
 import 'package:trilling_web/injection.dart';
 
 import 'features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
@@ -51,9 +53,24 @@ class MyApp extends StatelessWidget {
             },
             routes: [
               GoRoute(
-                  path: 'neworder',
+                  path: 'Clients/:cid/neworder',
                   builder: (context, state) {
-                 OrderItem.Order order =   state.extra as OrderItem.Order;
+                    Client client = state.extra as Client;
+
+                    return NewOrderPage(
+                      client: client,
+                    );
+                  }),
+              GoRoute(
+                path: 'Clients/newClient',
+                builder: (context, state) => NewClientPage(),
+              ),
+              GoRoute(
+                  path: 'Clients/:cid/lieferscheid/:oid',
+                  builder: (context, state) {
+                    OrderItem.Order order = state.extra as OrderItem.Order;
+                    final String clientId = state.params['cid']!;
+                    final String orderId = state.params['oid']!;
                     return LieferScheinPage(
                       orderItem: order,
                     );

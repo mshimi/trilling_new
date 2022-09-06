@@ -10,6 +10,6 @@ extension DateTimeStringValue on DateTime {
     int hour = this.hour;
     int minute = this.minute;
 
-    return 'hour: minute';
+    return '$hour: $minute';
   }
 }

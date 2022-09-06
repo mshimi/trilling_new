@@ -8,7 +8,8 @@ class LiftSideLieferSchein extends StatelessWidget {
   final double height;
   final Order order;
 
-  const LiftSideLieferSchein({Key? key, required this.height, required this.order})
+  const LiftSideLieferSchein(
+      {Key? key, required this.height, required this.order})
       : super(key: key);
 
   @override
@@ -23,7 +24,11 @@ class LiftSideLieferSchein extends StatelessWidget {
             LiftSideHeader(
               height: height * 0.125,
             ),
-            LiftSideAuftragsGeber(height: height * 0.35, order: order,),
+            LiftSideAuftragsGeber(
+              height: height * 0.35,
+              order: order,
+            ),
+            Expanded(child: Placeholder()),
           ],
         ),
       ),

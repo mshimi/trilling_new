@@ -42,7 +42,13 @@ class ClientTableBuilder {
                   icon: Icon(Icons.edit),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String clientId = element.id;
+                    GoRouter.of(context).go(
+                      '/Clients/$clientId/neworder',
+                      extra: element,
+                    );
+                  },
                   icon: Icon(Icons.shopping_cart),
                 )
               ],
