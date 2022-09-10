@@ -67,7 +67,7 @@ class ClientsPageBloc extends Bloc<ClientPageEvent, ClientPageState> {
 
       eitherValueOrFailure.fold(
         (l) {
-          print('object');
+        
         },
         (r) {
           clients = r.map((e) => e.toDomain()).toList();

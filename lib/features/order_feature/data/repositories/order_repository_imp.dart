@@ -54,16 +54,15 @@ class OrderImp implements OrderRepository {
           .where('eventDate', isGreaterThanOrEqualTo: dateTimeFirebaseValue)
           .get();
 
-      print(dateTimeFirebaseValue);
+      
       var i = 1;
       List<OrderModel> orders = querySnapshot.docs.map((documentSnapshot) {
-        print(documentSnapshot.data());
-        print(i);
+        
         i++;
         return OrderModel.fromMap(documentSnapshot.data());
       }).toList();
 
-      print(orders.length);
+    
       return Right(orders);
     } catch (e) {
       return Left(StoreFailure());

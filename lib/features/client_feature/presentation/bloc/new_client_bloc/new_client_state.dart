@@ -18,19 +18,31 @@ class NewClientState extends Equatable {
   final AuftragsgeberType auftragsgeberType;
   final String? name;
   final String? firstName;
-
+  String? selectedCity;
+  String? selectedDistrict;
   final String? telephone;
   final String? email;
-  const NewClientState({
+  final bool isClientAdresseLiferAdresse;
+  List<Adresse> listOfDelivaryAdresses = [];
+  NewClientState({
+    this.selectedCity,
     this.auftragsgeberType = AuftragsgeberType.privat,
     this.email,
     this.firstName,
     this.name,
     this.telephone,
+    this.selectedDistrict,
+    this.isClientAdresseLiferAdresse = true,
   });
 
   @override
-  List<Object> get props => [auftragsgeberType];
+  List<Object> get props => [
+        auftragsgeberType,
+        selectedCity!,
+        selectedDistrict!,
+        isClientAdresseLiferAdresse,
+        listOfDelivaryAdresses,
+      ];
 
   NewClientState copywith({
     AuftragsgeberType? auftragsgeberType,
@@ -38,6 +50,9 @@ class NewClientState extends Equatable {
     String? firstName,
     String? telephone,
     String? email,
+    String? selectedCity,
+    String? selectedDistrict,
+    bool? isClientAdresseLiferAdresse,
   }) {
     return NewClientState(
       auftragsgeberType: auftragsgeberType ?? this.auftragsgeberType,
@@ -45,6 +60,18 @@ class NewClientState extends Equatable {
       firstName: firstName ?? this.firstName,
       telephone: telephone ?? this.telephone,
       email: email ?? this.email,
+      selectedCity: selectedCity ?? this.selectedCity,
+      selectedDistrict: selectedDistrict ?? this.selectedDistrict,
+      isClientAdresseLiferAdresse:
+          isClientAdresseLiferAdresse ?? this.isClientAdresseLiferAdresse,
     );
   }
+}
+
+class ClientRegestredState extends NewClientState {
+  Client client;
+  ClientRegestredState({required this.client});
+
+  @override
+  List<Object> get props => [client];
 }

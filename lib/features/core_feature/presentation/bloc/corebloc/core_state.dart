@@ -23,7 +23,7 @@ class AddNewDistrictState extends CoreState {}
 class DistrictUpdatedState extends CoreState {
   final int districtIndex;
 
-  DistrictUpdatedState({required this.districtIndex});
+  const DistrictUpdatedState({required this.districtIndex});
 
     @override
   List<Object> get props => [districtIndex];

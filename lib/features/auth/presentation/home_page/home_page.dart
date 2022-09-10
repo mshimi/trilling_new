@@ -10,6 +10,7 @@ import 'package:trilling_web/features/client_feature/presentation/pages/clients_
 import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/core_feature/presentation/pages/admin_page.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/order_page/orders_page.dart';
+import 'package:trilling_web/features/product_feature/presentation/pages/products_page.dart';
 
 import 'package:trilling_web/injection.dart';
 
@@ -39,7 +40,7 @@ class HomePage extends StatelessWidget {
       {
         'text': 'Product',
         'icon': Icons.shopping_cart_rounded,
-        'page': const Placeholder()
+        'page': const ProductPage()
       },
       {
         'text': 'Admin',
@@ -55,6 +56,7 @@ class HomePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl.get<ClientsPageBloc>(),
+          lazy: false,
         )
       ],
       child: Scaffold(

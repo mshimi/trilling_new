@@ -6,9 +6,13 @@ class CoreData {
   List<City> cities;
   List<ProductCategory> categories;
   List<Packung> packungen;
+  List<String> zusatzstoffe;
+  List<String> allergene;
 
   CoreData(
       {required this.categories,
       required this.cities,
-      required this.packungen});
+      required this.packungen,
+      required this.allergene,
+      required this.zusatzstoffe});
 }

@@ -74,7 +74,7 @@ class ClientImp implements ClientRepository {
       remove print
 
       */
-      print(e.toString());
+    
       return Left(StoreFailure());
     }
   }
@@ -126,8 +126,7 @@ class ClientImp implements ClientRepository {
           .get();
 
       return Right(querySnapshot.docs.map((e) {
-        print(e.data());
-        print(ClientModel.fromMap(e.data()).toString());
+     
 
         return ClientModel.fromMap(e.data());
       }).toList());

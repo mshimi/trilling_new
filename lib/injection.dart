@@ -46,6 +46,7 @@ import 'package:trilling_web/features/product_feature/domain/repositories/produc
 import 'package:trilling_web/features/product_feature/data/repositories/product_imp.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/update_product.dart';
+import 'package:trilling_web/features/product_feature/presentation/bloc/new_product_bloc/new_product_bloc.dart';
 
 final sl = GetIt.I; // sl == service locator
 
@@ -147,17 +148,20 @@ Future<void> init() async {
 
   //bloc
 
-  sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
 
-  sl.registerFactory<NewClientBloc>(
-      () => NewClientBloc(inputValidatorRepository: sl.get()));
+
+  sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
+  sl.registerFactory<NewProductBloc>(() => NewProductBloc());
+  sl.registerFactory<NewClientBloc>(() => NewClientBloc(
+      inputValidatorRepository: sl.get(), addNewClientUseCase: sl.get()));
 
   sl.registerFactory<HomeNavigatorBloc>(() => HomeNavigatorBloc());
 
   sl.registerFactory<CoreBloc>(() =>
       CoreBloc(getCoreDataUseCase: sl.get(), updateCoreDataUseCase: sl.get()));
 
-  sl.registerFactory<OrdersBloc>(() => OrdersBloc( getAllOrdersByDayUseCase: sl.get()));
+  sl.registerFactory<OrdersBloc>(
+      () => OrdersBloc(getAllOrdersByDayUseCase: sl.get()));
 
   sl.registerFactory<ClientsPageBloc>(() => ClientsPageBloc(
       addNewClientUseCase: sl.get(),

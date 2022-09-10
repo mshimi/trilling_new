@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TopItem extends StatelessWidget {
   final String topfName;
   final int count;
-  TopItem({super.key, required this.topfName, required this.count});
+  const TopItem({super.key, required this.topfName, required this.count});
 
   @override
   Widget build(BuildContext context) {

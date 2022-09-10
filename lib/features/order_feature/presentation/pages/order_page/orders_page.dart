@@ -23,8 +23,7 @@ class OrdersPage extends StatelessWidget {
           OrdersBloc ordersBloc = BlocProvider.of<OrdersBloc>(context);
           List<Order> orders = ordersBloc.orders;
 
-          print(orders.length);
-
+     
           return Column(
             children: [
               SizedBox(

@@ -24,6 +24,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           await getAllOrdersByDayUseCase.call(
               dateTime: today.subtract(Duration(days: 50)));
 
+      // ignore: avoid_print
       failureOrOrderModel.fold((l) => print('failure'), (orderModels) {
         orders = orderModels.map((e) => e.toDomain()).toList();
         emit(OrdersLoadedSuccesfulSate(orders: orders));

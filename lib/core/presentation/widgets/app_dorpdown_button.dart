@@ -6,7 +6,7 @@ class AppDorpDownButton extends StatelessWidget {
   final dynamic value;
   final Function(Object?)? onChanged;
 
-  AppDorpDownButton({
+  const AppDorpDownButton({
     Key? key,
     required this.dropDownMenuItems,
     required this.width,

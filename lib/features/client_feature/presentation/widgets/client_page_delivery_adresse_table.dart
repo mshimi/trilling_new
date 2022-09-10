@@ -4,6 +4,7 @@ import 'package:trilling_web/core/utils/colors.dart';
 import 'package:trilling_web/features/client_feature/domain/entities/client.dart';
 
 import '../../../../core/presentation/widgets/app_elevatedbutton.dart';
+import '../../../../core/utils/lists.dart';
 
 class ClientPageDeliveryAdresse extends StatelessWidget {
   final Client client;
@@ -46,13 +47,7 @@ class ClientPageDeliveryAdresse extends StatelessWidget {
                         ),
                       ],
                     ),
-                    columns: const [
-                      DataColumn(label: Text('Stadt')),
-                      DataColumn(label: Text('Stadtteil')),
-                      DataColumn(label: Text('Straße')),
-                      DataColumn(label: Text('Housenummer')),
-                      DataColumn(label: Text('post')),
-                    ],
+                    columns: delivaryAdressesColumn,
                     itemCount: client.deliveryAdresse == null
                         ? 0
                         : client.deliveryAdresse!.length,

@@ -12,6 +12,7 @@ import 'package:trilling_web/features/order_feature/domain/entities/order.dart'
 import 'package:trilling_web/features/order_feature/domain/entities/transfer.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/liefer_schein_page.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/new_order_page/new_order_page.dart';
+import 'package:trilling_web/features/product_feature/presentation/pages/new_product_page.dart';
 import 'package:trilling_web/injection.dart';
 
 import 'features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
@@ -64,6 +65,10 @@ class MyApp extends StatelessWidget {
               GoRoute(
                 path: 'Clients/newClient',
                 builder: (context, state) => NewClientPage(),
+              ),
+              GoRoute(
+                path: 'Products/newProduct',
+                builder: (context, state) => NewProductPage(),
               ),
               GoRoute(
                   path: 'Clients/:cid/lieferscheid/:oid',

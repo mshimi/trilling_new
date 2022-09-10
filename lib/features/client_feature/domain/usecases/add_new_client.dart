@@ -13,13 +13,13 @@ class AddNewClientUseCase {
     required this.clientRepository,
   });
 
-  Future<Either<Failure, Unit>> call({
+  Future<Either<Failure, ClientModel>> call({
     required Client client,
   }) async {
     Either<Failure, String> newClient =
         await clientRepository.addNewClient(client: client);
 
-    Future<Either<Failure, Unit>> changeIdOrFailure = newClient.fold(
+    Future<Either<Failure, ClientModel>> changeIdOrFailure = newClient.fold(
       (l) async {
         return Left(StoreFailure());
       },
@@ -29,7 +29,7 @@ class AddNewClientUseCase {
 
         await clientRepository.updateClientsData(clientModel: clientModel);
 
-        return const Right(unit);
+        return  Right(clientModel);
       },
     );
     return changeIdOrFailure;

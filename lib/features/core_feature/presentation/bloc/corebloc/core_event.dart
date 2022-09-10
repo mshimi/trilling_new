@@ -35,7 +35,7 @@ class DistrictChangedEvent extends CoreEvent {
 }
 
 class AddNewDistrictEvent extends CoreEvent {
-  AddNewDistrictEvent();
+  const AddNewDistrictEvent();
   @override
   List<Object> get props => [];
 }
@@ -43,7 +43,7 @@ class AddNewDistrictEvent extends CoreEvent {
 class ValidateNewDistrictValuesAndUpdateCoreDataEvent extends CoreEvent {
   final int index;
   final District district;
-  ValidateNewDistrictValuesAndUpdateCoreDataEvent(
+  const ValidateNewDistrictValuesAndUpdateCoreDataEvent(
       {required this.district, required this.index});
   @override
   List<Object> get props => [district, index];

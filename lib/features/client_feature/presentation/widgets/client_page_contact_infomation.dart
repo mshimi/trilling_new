@@ -229,8 +229,8 @@ class ClientPageContactInfomation extends StatelessWidget {
                   ? AppDorpDownButton(
                       dropDownMenuItems: districts
                           .map((e) => DropdownMenuItem(
-                                child: Text(e),
                                 value: e,
+                                child: Text(e),
                               ))
                           .toList(),
                       width: width / 5,

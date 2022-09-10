@@ -26,7 +26,7 @@ class ClientPage extends StatelessWidget {
     double height = context.getHeight();
     CoreBloc coreBloc = BlocProvider.of<CoreBloc>(context);
 
-    print(client);
+  
 
     return BlocProvider(
       create: (context) =>

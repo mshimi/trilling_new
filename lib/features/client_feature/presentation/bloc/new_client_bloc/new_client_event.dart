@@ -20,8 +20,36 @@ class InputValueChanged extends NewClientEvent {
 
 class AuftragsGeberChanged extends NewClientEvent {
   final String auftragsgeberType;
-  AuftragsGeberChanged({required this.auftragsgeberType});
-@override
+  const AuftragsGeberChanged({required this.auftragsgeberType});
+  @override
   List<Object> get props => [auftragsgeberType];
+}
 
+class CityChanged extends NewClientEvent {
+  final String cityName;
+  const CityChanged({required this.cityName});
+  @override
+  List<Object> get props => [cityName];
+}
+
+class DistrictChanged extends NewClientEvent {
+  final String districtName;
+  const DistrictChanged({required this.districtName});
+  @override
+  List<Object> get props => [districtName];
+}
+
+class IsClientAdresseLiferAdresseChanged extends NewClientEvent {
+  bool isClientAdresseLiferAdresse;
+
+  IsClientAdresseLiferAdresseChanged(
+      {required this.isClientAdresseLiferAdresse});
+  @override
+  List<Object> get props => [isClientAdresseLiferAdresse];
+}
+
+class AddClientButtonEvent extends NewClientEvent {
+  Client client;
+  AddClientButtonEvent({required this.client});
+  List<Object> get props => [client];
 }

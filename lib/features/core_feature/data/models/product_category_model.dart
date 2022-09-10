@@ -20,8 +20,10 @@ class ProductCategoryModel {
 
   ProductCategory toDomain() {
     return ProductCategory(
-        name: '${name[0].toUpperCase()}${name.substring(1)}}',
-        subCategories: subCategories.map((e) => '${e[0].toUpperCase()}${e.substring(1)}').toList());
+        name: '${name[0].toUpperCase()}${name.substring(1)}',
+        subCategories: subCategories
+            .map((e) => '${e[0].toUpperCase()}${e.substring(1)}')
+            .toList());
   }
 
   ProductCategoryModel copyWith({

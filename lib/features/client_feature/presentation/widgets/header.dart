@@ -29,8 +29,8 @@ class ClientTableHeader extends StatelessWidget {
 
     List<DropdownMenuItem<String>> searchDropDownMenuItem = searchDropDown
         .map((e) => DropdownMenuItem(
-              child: Text(e),
               value: e,
+              child: Text(e),
             ))
         .toList();
 
@@ -100,8 +100,8 @@ class ClientTableHeader extends StatelessWidget {
 
       List<DropdownMenuItem<String>> citiesDropDown = cities
           .map((e) => DropdownMenuItem(
-                child: Text(e),
                 value: e,
+                child: Text(e),
               ))
           .toList();
 
@@ -121,8 +121,8 @@ class ClientTableHeader extends StatelessWidget {
 
       List<DropdownMenuItem<String>> districtsDropDown = districts
           .map((e) => DropdownMenuItem(
-                child: Text(e),
                 value: e,
+                child: Text(e),
               ))
           .toList();
 

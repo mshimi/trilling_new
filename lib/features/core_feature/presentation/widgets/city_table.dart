@@ -89,7 +89,7 @@ class _CityTableState extends State<CityTable> {
                             }
                           },
                           onDelete: () {
-                            print('object');
+                         
                             widget.coreBloc.add(
                                 DistrictDeletedEvent(districtIndex: index));
                           },
