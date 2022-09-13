@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/product_category.dart';
 import 'package:trilling_web/features/product_feature/presentation/widgets/new_product_choice_input.dart';
@@ -39,8 +37,7 @@ class _CategroyAndSubCategoryDropButtonState
 
     print(widget.selectedSubCategory);
 
-    return Flexible(
-        child: Column(
+    return Column(
       children: [
         ChoiceInpuNewProduct(
             onchanged: (v) {
@@ -74,6 +71,6 @@ class _CategroyAndSubCategoryDropButtonState
             width: width,
             titel: 'subKategorie'),
       ],
-    ));
+    );
   }
 }

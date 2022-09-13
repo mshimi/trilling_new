@@ -35,10 +35,9 @@ class CoreDataModel {
   }
 
   CoreData toDomain() {
-
     return CoreData(
-        allergene: ['allergene'],
-        zusatzstoffe: ['zusatzstoffe'],
+        allergene: allergene,
+        zusatzstoffe: zusatzstoffe,
         categories: categories.map((e) => e.toDomain()).toList(),
         cities: cities.map((e) => e.toDomain()).toList(),
         packungen: packungen.map((e) => e.toDomain()).toList());
@@ -70,7 +69,6 @@ class CoreDataModel {
   }
 
   factory CoreDataModel.fromMap(Map<String, dynamic> map) {
-  
     return CoreDataModel(
       cities:
           List<CityModel>.from(map['cities']?.map((x) => CityModel.fromMap(x))),

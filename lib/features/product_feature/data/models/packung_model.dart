@@ -53,4 +53,28 @@ class PackungModel extends Equatable {
   Packung toDomain() {
     return Packung(name: name, value: value);
   }
+
+  String packungValueToSymbole() {
+    if (value == 0.25) {
+      return '¼';
+    } else if (value == 0.50) {
+      return '½';
+    } else if (value == 0.33) {
+      return '⅓';
+    } else {
+      return '1';
+    }
+  }
+
+  double packungValueFromSympole(String sympole) {
+    if (sympole == '¼') {
+      return 0.25;
+    } else if (value == '½') {
+      return 0.50;
+    } else if (value == '⅓') {
+      return 0.33;
+    } else {
+      return 1;
+    }
+  }
 }
