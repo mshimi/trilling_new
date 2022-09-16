@@ -45,6 +45,7 @@ import 'package:trilling_web/features/order_feature/presentation/bloc/orders_blo
 import 'package:trilling_web/features/product_feature/domain/repositories/product_repository.dart';
 import 'package:trilling_web/features/product_feature/data/repositories/product_imp.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
+import 'package:trilling_web/features/product_feature/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/update_product.dart';
 import 'package:trilling_web/features/product_feature/presentation/bloc/new_product_bloc/new_product_bloc.dart';
 
@@ -86,6 +87,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UpdateProductUseCase>(
       () => UpdateProductUseCase(productRepository: sl.get()));
+
+        sl.registerLazySingleton<GetProductByIdUseCase>(
+      () => GetProductByIdUseCase(productRepository: sl.get()));
 
   /* Client UseCases  */
 
@@ -151,7 +155,7 @@ Future<void> init() async {
 
 
   sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
-  sl.registerFactory<NewProductBloc>(() => NewProductBloc(addNewProductUseCase: sl.get()));
+  // sl.registerFactory<NewProductBloc>(() => NewProductBloc(addNewProductUseCase: sl.get()));
   sl.registerFactory<NewClientBloc>(() => NewClientBloc(
       inputValidatorRepository: sl.get(), addNewClientUseCase: sl.get()));
 

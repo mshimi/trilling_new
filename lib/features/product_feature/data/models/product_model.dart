@@ -128,6 +128,7 @@ class ProductModel extends Equatable {
       listOfModel.add(ProductCapicityModel.fromDomain(productCapicity));
     }
 
+    print(product.category);
     return ProductModel(
       pricePerPerson: product.pricePerPerson,
       category: product.category,

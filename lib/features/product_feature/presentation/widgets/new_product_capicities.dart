@@ -13,7 +13,10 @@ class ProductCapicitiesInput extends StatefulWidget {
   final TextEditingController _minPaxController = TextEditingController();
   final TextEditingController _maxPaxController = TextEditingController();
   ProductCapicitiesInput(
-      {super.key, required this.packungen, required this.titel, required this.capicityList});
+      {super.key,
+      required this.packungen,
+      required this.titel,
+      required this.capicityList});
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 

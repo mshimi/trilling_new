@@ -29,7 +29,7 @@ class ProductImp implements ProductRepository {
   Future<Either<Failure, Unit>> updateProduct(
       {required ProductModel productModel}) async {
     try {
-       await firestore
+      await firestore
           .appCollection(dbCollections: DbCollections.products)
           .doc(productModel.id!)
           .update(productModel.toMap());
@@ -40,11 +40,11 @@ class ProductImp implements ProductRepository {
     }
   }
 
- @override
+  @override
   Future<Either<Failure, Unit>> deleteProduct(
       {required String productId}) async {
     try {
-       await firestore
+      await firestore
           .appCollection(dbCollections: DbCollections.products)
           .doc(productId)
           .delete();
@@ -55,4 +55,18 @@ class ProductImp implements ProductRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, ProductModel>> getProductById(
+      {required String productId}) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+          .appCollection(dbCollections: DbCollections.products)
+          .doc(productId)
+          .get();
+
+      return Right(ProductModel.fromMap(doc.data()!));
+    } catch (e) {
+      return Left(StoreFailure());
+    }
+  }
 }
