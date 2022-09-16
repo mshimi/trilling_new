@@ -6,3 +6,21 @@ abstract class NewProductEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class AddCapicityEvent extends NewProductEvent {
+  ProductCapicity productCapicity;
+
+  AddCapicityEvent({required this.productCapicity});
+
+  @override
+  List<Object> get props => [productCapicity];
+}
+
+class AddNewProductEvent extends NewProductEvent {
+  final Product product;
+
+  AddNewProductEvent({required this.product});
+
+    @override
+  List<Object> get props => [product];
+}

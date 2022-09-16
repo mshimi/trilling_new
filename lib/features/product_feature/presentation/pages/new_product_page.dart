@@ -3,10 +3,10 @@ import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
 import 'package:trilling_web/features/client_feature/export.dart';
 import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
-import 'package:trilling_web/features/product_feature/domain/entities/packung.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product_capicity.dart';
 import 'package:trilling_web/features/product_feature/presentation/bloc/new_product_bloc/new_product_bloc.dart';
+import 'package:trilling_web/features/product_feature/presentation/capicity_data_ui_controller.dart';
 import 'package:trilling_web/features/product_feature/presentation/widgets/category_and_subcategory_dropbutton.dart';
 import 'package:trilling_web/features/product_feature/presentation/widgets/divider_widget.dart';
 import 'package:trilling_web/features/product_feature/presentation/widgets/new_product_string_input.dart';
@@ -16,7 +16,8 @@ import '../widgets/new_product_capicities.dart';
 import '../widgets/new_product_multichoice.dart';
 
 class NewProductPage extends StatelessWidget {
-  const NewProductPage({super.key});
+   String? selectedCategory;
+  NewProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,13 @@ class NewProductPage extends StatelessWidget {
     List<String> selectedAllergene = [];
     List<String> selectedZusatzStoff = [];
     List<ProductCapicity> productCapicites = [];
+    final CapicityList capicityList = CapicityList();
+
     CoreBloc coreBloc = BlocProvider.of<CoreBloc>(context);
     List<String> categories =
         coreBloc.coreData.categories.map((e) => e.name).toList();
 
-    String selectedCategory = categories[0];
+    selectedCategory ??= categories.first;
     String? selectedSubCategory;
     List<String> subCategories = [];
     for (var category in coreBloc.categories) {
@@ -42,24 +45,6 @@ class NewProductPage extends StatelessWidget {
     List<String> allergene = coreBloc.coreData.allergene;
     List<String> zusatzstoffe = coreBloc.coreData.zusatzstoffe;
 
-    Product product = Product(
-        allergySubstances: [],
-        additives: [],
-        name: 'Name',
-        descreption: 'descreption',
-        minimumPax: 10,
-        pricePerPerson: 10,
-        category: 'category',
-        subCategory: 'subCategory',
-        creationInfo: CreationInfo(
-            creationDate: DateTime.now(),
-            userName: 'Mahmoud',
-            userId: 'userId'),
-        productCapicites: <ProductCapicity>[
-          ProductCapicity(
-              minPax: 10, maxPax: 20, packung: Packung(name: '', value: 1))
-        ]);
-
     //Controllers
     TextEditingController nameController = TextEditingController();
     TextEditingController descreptionController = TextEditingController();
@@ -69,6 +54,10 @@ class NewProductPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl.get<NewProductBloc>(),
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Neues Product'),
+          backgroundColor: blueColor1,
+        ),
         body: BlocConsumer<NewProductBloc, NewProductState>(
           listener: (context, state) {
             // TODO: implement listener
@@ -101,7 +90,7 @@ class NewProductPage extends StatelessWidget {
                     DividerWidget(),
                     CategroyAndSubCategoryDropButton(
                         selectedSubCategory: selectedSubCategory!,
-                        selectedCategory: selectedCategory,
+                        selectedCategory: selectedCategory!,
                         categories: coreBloc.categories),
                     DividerWidget(),
                     StringInputNewProduct(
@@ -120,9 +109,7 @@ class NewProductPage extends StatelessWidget {
                       allItems: allergene,
                       selectedItems: selectedAllergene,
                     ),
-                    DividerWidget(
-                      height: 15,
-                    ),
+                    DividerWidget(),
                     MultiChoiceItems(
                       titel: 'Zusatzstoffe',
                       width: width,
@@ -135,7 +122,7 @@ class NewProductPage extends StatelessWidget {
                       child: ProductCapicitiesInput(
                         titel: 'Kapizitäz',
                         packungen: coreBloc.coreData.packungen,
-                        productCapicites: productCapicites,
+                        capicityList: capicityList,
                       ),
                     ),
                     /* this is only for test Button */
@@ -144,24 +131,26 @@ class NewProductPage extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Product product = Product(
-                                  pricePerPerson: 10,
-                                  category: 'category',
-                                  subCategory: 'subCategory',
-                                  name: nameController.text,
-                                  descreption: descreptionController.text,
-                                  minimumPax: 10,
-                                  creationInfo: CreationInfo(
-                                      userName: sl
-                                          .get<Auth_Repo>()
-                                          .currentAppUser()!
-                                          .email,
-                                      userId: sl
-                                          .get<Auth_Repo>()
-                                          .currentAppUser()!
-                                          .id,
-                                      creationDate: DateTime.now()),
-                                  productCapicites: []);
+                              print(selectedCategory);
+                              // Product product = Product(
+                              //     allergySubstances: selectedAllergene,
+                              //     pricePerPerson:
+                              //         double.parse(priceController.text),
+                              //     category: selectedCategory,
+                              //     subCategory: selectedSubCategory!,
+                              //     name: nameController.text,
+                              //     descreption: descreptionController.text,
+                              //     minimumPax:
+                              //         int.parse(minimumPaxController.text),
+                              //     creationInfo: CreationInfo(
+                              //         userName: 'asd',
+                              //         userId: 'asd',
+                              //         creationDate: DateTime.now()),
+                              //     productCapicites: capicityList.capicities,
+                              //     additives: selectedZusatzStoff);
+
+                              // BlocProvider.of<NewProductBloc>(context)
+                              //     .add(AddNewProductEvent(product: product));
                             },
                             child: const Text('Product hinzufügen'))
                       ],

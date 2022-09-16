@@ -151,7 +151,7 @@ Future<void> init() async {
 
 
   sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
-  sl.registerFactory<NewProductBloc>(() => NewProductBloc());
+  sl.registerFactory<NewProductBloc>(() => NewProductBloc(addNewProductUseCase: sl.get()));
   sl.registerFactory<NewClientBloc>(() => NewClientBloc(
       inputValidatorRepository: sl.get(), addNewClientUseCase: sl.get()));
 

@@ -1,7 +1,8 @@
+import 'package:trilling_web/features/client_feature/export.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/creationinfo.dart';
 import 'package:trilling_web/features/product_feature/domain/entities/product_capicity.dart';
 
-class Product {
+class Product extends Equatable {
   String? id;
   double pricePerPerson;
   String category;
@@ -26,4 +27,8 @@ class Product {
     this.additives,
     required this.productCapicites,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id!, pricePerPerson];
 }
