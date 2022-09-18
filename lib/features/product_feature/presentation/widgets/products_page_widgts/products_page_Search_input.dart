@@ -13,6 +13,7 @@ class SearchInputProductPage extends StatelessWidget {
       listener: (context, state) {
         // TODO: implement listener
       },
+      buildWhen:(previous, current) => previous.currentSearchOptions != current.currentSearchOptions ,
       builder: (context, state) {
         if(state.currentSearchOptions == SearchOptions.name){
           return SearchInputByProductName();

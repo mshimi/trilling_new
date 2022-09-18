@@ -25,17 +25,17 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: sized_box_for_whitespace
     return Container(
-      
       width: width,
       child: TextFormField(
         enabled: enabled,
         controller: controller,
         validator: validator,
         onChanged: onChanged,
-      
         decoration: InputDecoration(
-       
-            label: Text(labelText, style: labelstyle,),
+            label: Text(
+              labelText,
+              style: labelstyle,
+            ),
             floatingLabelStyle: const TextStyle(color: Colors.black),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
