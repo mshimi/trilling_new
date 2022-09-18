@@ -18,6 +18,7 @@ class _SearchInputByProductNameState extends State<SearchInputByProductName> {
         children: [
           AppTextFormField(
               width: context.getWidth(), labelText: 'Product Name'),
+              IconButton(onPressed: (){}, icon: Icon(Icons.search))
         ],
       ),
     );
