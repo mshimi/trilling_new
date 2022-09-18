@@ -1,26 +1,48 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:trilling_web/features/auth/domain/repositries/auth_repo.dart';
-import 'package:trilling_web/features/auth/infrastructure/repositries/auth_imp.dart';
-import 'package:trilling_web/features/auth/presentation/login_page/bloc/auth_bloc/auth_bloc.dart';
+
 import 'package:trilling_web/features/client_feature/export.dart';
-import 'package:trilling_web/injection.dart';
+import 'package:trilling_web/features/product_feature/presentation/bloc/products_bloc.dart';
+import 'package:trilling_web/features/product_feature/presentation/widgets/products_page_widgts/products_page_header_searchoptions.dart';
+import 'package:trilling_web/features/product_feature/presentation/widgets/products_page_widgts/searchoptions_checkbox.dart';
+
+import '../widgets/products_page_widgts/products_page_Search_input.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              context.go('/Products/newProduct');
-            },
-            child: Text('click')),
-      ),
+    double height = context.getHeight();
+    double width = context.getWidth();
+
+    // List<String> searchOptions = [
+    //   'Name',
+    //   'Id',
+    //   'price',
+    //   'Kategorie',
+    //   'Min. Pax',
+    //   'Allergene',
+    //   'zusatzstoffe'
+    // ];
+
+    return BlocConsumer<ProductsBloc, ProductState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        var currentSearchOption = state.searchOption;
+        return Container(
+            padding: EdgeInsets.all(10),
+            height: height,
+            child: ListView(
+              children: [
+                HeaderProductsPage(),
+                  Divider(),
+                SearchInputProductPage(),
+
+              ],
+            ));
+      },
     );
   }
 }

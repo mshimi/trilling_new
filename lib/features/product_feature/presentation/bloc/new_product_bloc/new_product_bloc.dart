@@ -22,8 +22,8 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
       : super(NewProductInitialState()) {
     on<AddNewProductEvent>((event, emit) async {
       Product product = Product(
-        additives: event.additives,
-        allergySubstances: event.allergySubstances,
+          additives: event.additives,
+          allergySubstances: event.allergySubstances,
           pricePerPerson: event.pricePerPerson,
           category: selectedCategory,
           subCategory: selectedsubCategory,
@@ -33,7 +33,7 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
           creationInfo: CreationInfo(
               creationDate: DateTime.now(), userId: 'mah', userName: 'mah'),
           productCapicites: event.productCapicites);
-      Either<Failure, Unit> failureOrDone = await addNewProductUseCase.call(
+      Either<Failure, String> failureOrDone = await addNewProductUseCase.call(
           productModel: ProductModel.fromDomain(product));
 
       failureOrDone.fold((l) => null, (r) {

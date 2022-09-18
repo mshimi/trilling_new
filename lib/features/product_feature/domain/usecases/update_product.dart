@@ -8,7 +8,7 @@ class UpdateProductUseCase {
 
   UpdateProductUseCase({required this.productRepository});
 
-  Future<Either<Failure, Unit>> call({required ProductModel productModel}) async {
+  Future<Either<Failure, ProductModel>> call({required ProductModel productModel}) async {
  return await  productRepository.updateProduct(productModel: productModel);
   }
 }

@@ -26,7 +26,7 @@ class ProductImp implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> updateProduct(
+  Future<Either<Failure, ProductModel>> updateProduct(
       {required ProductModel productModel}) async {
     try {
       await firestore
@@ -34,7 +34,7 @@ class ProductImp implements ProductRepository {
           .doc(productModel.id!)
           .update(productModel.toMap());
 
-      return const Right(unit);
+      return  Right(productModel);
     } catch (e) {
       return left(StoreFailure());
     }

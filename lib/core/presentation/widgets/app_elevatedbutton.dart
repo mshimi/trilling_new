@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
 import 'package:trilling_web/core/utils/colors.dart';
 
 class AppElevatedButton extends StatelessWidget {
@@ -20,7 +21,7 @@ class AppElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: context.getWidth() * 0.15,
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(backGroundColor)),

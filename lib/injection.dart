@@ -47,7 +47,9 @@ import 'package:trilling_web/features/product_feature/data/repositories/product_
 import 'package:trilling_web/features/product_feature/domain/usecases/add_new_product.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:trilling_web/features/product_feature/domain/usecases/update_product.dart';
-import 'package:trilling_web/features/product_feature/presentation/bloc/new_product_bloc/new_product_bloc.dart';
+
+import 'features/core_feature/domain/usecases/coredata_controller.dart';
+import 'features/product_feature/domain/usecases/product_usecase.dart';
 
 final sl = GetIt.I; // sl == service locator
 
@@ -88,8 +90,17 @@ Future<void> init() async {
   sl.registerLazySingleton<UpdateProductUseCase>(
       () => UpdateProductUseCase(productRepository: sl.get()));
 
-        sl.registerLazySingleton<GetProductByIdUseCase>(
+  sl.registerLazySingleton<GetProductByIdUseCase>(
       () => GetProductByIdUseCase(productRepository: sl.get()));
+
+  sl.registerLazySingleton<ProductControllerUseCase>(() =>
+      ProductControllerUseCase(
+          getProductByIdUseCase: sl.get(),
+          updateProductUseCase: sl.get(),
+          coreDataControllerUseCase: sl.get()));
+
+  sl.registerLazySingleton<CoreDataControllerUseCase>(
+      () => CoreDataControllerUseCase(getCoreDataUseCase: sl.get()));
 
   /* Client UseCases  */
 
@@ -151,8 +162,6 @@ Future<void> init() async {
       () => UpdateAnOrderUseCase(orderRepository: sl.get()));
 
   //bloc
-
-
 
   sl.registerFactory<AuthBloc>(() => AuthBloc(auth_repo: sl.get()));
   // sl.registerFactory<NewProductBloc>(() => NewProductBloc(addNewProductUseCase: sl.get()));

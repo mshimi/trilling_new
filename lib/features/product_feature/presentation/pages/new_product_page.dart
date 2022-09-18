@@ -82,7 +82,13 @@ class NewProductPage extends StatelessWidget {
                         titel: 'Beschreibung'),
                     DividerWidget(),
                     CategroyAndSubCategoryDropButton(
-                        categories: coreBloc.categories),
+                      categories: coreBloc.categories,
+                      selectedCategory: BlocProvider.of<NewProductBloc>(context)
+                          .selectedCategory,
+                      selectedsubCategory:
+                          BlocProvider.of<NewProductBloc>(context)
+                              .selectedsubCategory,
+                    ),
                     DividerWidget(),
                     StringInputNewProduct(
                         width: width,

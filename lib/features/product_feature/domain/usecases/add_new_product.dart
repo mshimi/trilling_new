@@ -8,20 +8,22 @@ class AddNewProductUseCase {
 
   AddNewProductUseCase({required this.productRepository});
 
-  Future<Either<Failure, Unit>> call(
+  Future<Either<Failure, String>> call(
       {required ProductModel productModel}) async {
-    Either<Failure, String> newProduct =
-        await productRepository.addProduct(productModel: productModel);
+   
+      Either<Failure, String> newProduct =
+          await productRepository.addProduct(productModel: productModel);
 
-    Future<Either<Failure, Unit>> changeId = newProduct.fold(
-      (failure) async => Left(StoreFailure()),
-      (id) async {
-        ProductModel newProductModel = productModel.copyWith(id: id);
-        return await productRepository.updateProduct(
-            productModel: newProductModel);
-      },
-    );
+      Future<Either<Failure, String>> changeId = newProduct.fold(
+        (failure) async => Left(StoreFailure()),
+        (id) async {
+          ProductModel newProductModel = productModel.copyWith(id: id);
+          await productRepository.updateProduct(productModel: newProductModel);
+          return Right(id);
+        },
+      );
 
-    return changeId;
+      return (changeId);
+   
   }
 }

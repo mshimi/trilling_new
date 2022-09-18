@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trilling_web/core/extentions/mediaquery_extention.dart';
+import 'package:trilling_web/features/core_feature/domain/entities/core_data.dart';
 import 'package:trilling_web/features/core_feature/domain/entities/product_category.dart';
 import 'package:trilling_web/features/core_feature/presentation/bloc/corebloc/core_bloc.dart';
 import 'package:trilling_web/features/product_feature/presentation/bloc/new_product_bloc/new_product_bloc.dart';
@@ -12,9 +13,17 @@ class CategroyAndSubCategoryDropButton extends StatefulWidget {
   List<ProductCategory> categories;
   String? selectedSubCategory;
   List<String> subCategories = [];
+  String selectedCategory;
+  String selectedsubCategory;
+  
 
   CategroyAndSubCategoryDropButton(
-      {super.key, this.selectedSubCategory, required this.categories});
+      {super.key,
+      this.selectedSubCategory,
+
+      required this.categories,
+      required this.selectedCategory,
+      required this.selectedsubCategory});
 
   @override
   State<CategroyAndSubCategoryDropButton> createState() =>
@@ -28,18 +37,19 @@ class _CategroyAndSubCategoryDropButtonState
     double width = context.getWidth();
     double height = context.getWidth();
 
-    NewProductBloc newProductBloc = BlocProvider.of<NewProductBloc>(context);
-
+    // NewProductBloc newProductBloc = BlocProvider.of<NewProductBloc>(context);
+    List<String> subCatigories = widget.categories
+        .firstWhere((element) => element.name == widget.selectedCategory)
+        .subCategories;
     return Column(
       children: [
         ChoiceInpuNewProduct(
             onchanged: (v) {
               setState(() {
-                newProductBloc.selectedCategory = v!;
-                print(newProductBloc.selectedCategory);
+                widget.selectedCategory = v!;
               });
             },
-            value: newProductBloc.selectedCategory,
+            value: widget.selectedCategory,
             items: widget.categories.map((e) => e.name).toList(),
             height: height,
             width: width,
@@ -48,12 +58,12 @@ class _CategroyAndSubCategoryDropButtonState
         ChoiceInpuNewProduct(
             onchanged: (v) {
               setState(() {
-                newProductBloc.selectedsubCategory = v!;
-                print(newProductBloc.selectedsubCategory);
+                widget.selectedsubCategory = v!;
+                print(widget.selectedsubCategory);
               });
             },
-            value: newProductBloc.selectedsubCategory,
-            items: newProductBloc.subCatigories,
+            value: widget.selectedsubCategory,
+            items: widget.subCategories,
             height: height,
             width: width,
             titel: 'subKategorie'),

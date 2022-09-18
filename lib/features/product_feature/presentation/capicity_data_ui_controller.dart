@@ -1,9 +1,19 @@
 import '../domain/entities/product_capicity.dart';
 
 class CapicityList {
-  List<ProductCapicity> _list = [];
-
+  final List<ProductCapicity> _list = [];
+  CapicityList();
   List<ProductCapicity> get capicities => _list;
+
+  factory CapicityList.fromListOfProducts(List<ProductCapicity> capicites) {
+    CapicityList capicityList = CapicityList();
+
+    capicites.forEach(
+      (element) => capicityList.addCapicity(element),
+    );
+
+    return capicityList;
+  }
 
   void addCapicity(ProductCapicity newCapicity) {
     if (_list.any((element) => element.packung == newCapicity.packung)) {

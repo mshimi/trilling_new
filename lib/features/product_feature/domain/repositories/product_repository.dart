@@ -6,7 +6,7 @@ abstract class ProductRepository {
   Future<Either<Failure, String>> addProduct(
       {required ProductModel productModel});
 
-  Future<Either<Failure, Unit>> updateProduct(
+  Future<Either<Failure, ProductModel>> updateProduct(
       {required ProductModel productModel});
 
   Future<Either<Failure, Unit>> deleteProduct({required String productId});

@@ -6,3 +6,10 @@ abstract class EditProductBlocEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class InitEvent  extends EditProductBlocEvent {
+
+
+
+
+}

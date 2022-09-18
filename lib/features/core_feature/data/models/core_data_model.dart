@@ -138,4 +138,10 @@ class CoreDataModel {
     }
     return city;
   }
+
+
+
+  
+
+
 }

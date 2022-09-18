@@ -12,6 +12,8 @@ import 'package:trilling_web/features/order_feature/domain/entities/order.dart'
 import 'package:trilling_web/features/order_feature/domain/entities/transfer.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/liefer_schein_page.dart';
 import 'package:trilling_web/features/order_feature/presentation/pages/new_order_page/new_order_page.dart';
+import 'package:trilling_web/features/product_feature/domain/entities/product.dart';
+import 'package:trilling_web/features/product_feature/presentation/pages/edit_product_page.dart';
 import 'package:trilling_web/features/product_feature/presentation/pages/new_product_page.dart';
 import 'package:trilling_web/injection.dart';
 
@@ -81,6 +83,17 @@ class MyApp extends StatelessWidget {
                     );
                   }),
               GoRoute(
+                  path: 'Products/:pid',
+                  builder: (context, state) {
+                    final String producttId = state.params['pid']!;
+
+                    return EditProductPage(
+                      productId: producttId,
+                      product:
+                          state.extra == null ? null : state.extra as Product,
+                    );
+                  }),
+              GoRoute(
                 path: 'Clients/:cid',
                 builder: (context, state) {
                   // use state.params to get router parameter values
@@ -119,7 +132,7 @@ class MyApp extends StatelessWidget {
             const ResponsiveBreakpoint.autoScale(500, name: MOBILE),
             const ResponsiveBreakpoint.autoScale(800, name: TABLET),
             const ResponsiveBreakpoint.autoScale(1200, name: DESKTOP),
-            const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+            // const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
           ],
           background: Container(color: whiteColor),
         ),
