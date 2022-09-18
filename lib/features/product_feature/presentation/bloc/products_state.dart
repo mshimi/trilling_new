@@ -1,6 +1,6 @@
 part of 'products_bloc.dart';
 
-abstract class ProductState extends Equatable {
+abstract class ProductState<Type> extends Equatable {
   SearchOptions currentSearchOptions;
 
   ProductState({this.currentSearchOptions = SearchOptions.name});
@@ -15,25 +15,38 @@ abstract class ProductState extends Equatable {
   set searchOption(SearchOptions searchOptions) {
     this.currentSearchOptions = searchOptions;
   }
+
+  ProductState copywith({SearchOptions? searchOptions});
 }
 
 class ProductInitial extends ProductState {
-  ProductInitial();
+  ProductInitial({super.currentSearchOptions});
 
   @override
   set searchOption(SearchOptions searchOptions) {
     this.searchOption = searchOptions;
   }
+
+  @override
+  ProductState copywith({SearchOptions? searchOptions}) {
+    return ProductInitial(
+        currentSearchOptions: searchOptions ?? currentSearchOptions);
+  }
 }
 
 class SearchOptionChangedState extends ProductState {
-  SearchOptionChangedState({required super.currentSearchOptions}) {
-    print(currentSearchOptions);
-  }
+  SearchOptionChangedState({required super.currentSearchOptions});
 
   @override
   set searchOption(SearchOptions searchOptions) {
     searchOption = searchOptions;
+    super.currentSearchOptions = searchOptions;
+  }
+
+  @override
+  ProductState copywith({SearchOptions? searchOptions}) {
+    return SearchOptionChangedState(
+        currentSearchOptions: searchOptions ?? currentSearchOptions);
   }
 }
 
