@@ -47,6 +47,9 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
   List<String>? _subCatigories;
 
   List<String> get subCatigories {
+    if (_selectedCategory == null) {
+      return coreBloc.categories.first.subCategories;
+    }
     _subCatigories = coreBloc.categories
         .firstWhere((element) => element.name == _selectedCategory)
         .subCategories;
@@ -56,7 +59,8 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
 
   String get selectedCategory {
     if (_selectedCategory == null) {
-      _selectedCategory = coreBloc.categories[0].name;
+      _selectedCategory = coreBloc.categories.first.name;
+
       return _selectedCategory!;
     } else {
       return _selectedCategory!;
@@ -65,6 +69,7 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
 
   set selectedCategory(String value) {
     _selectedCategory = value;
+    subCatigories;
     selectedsubCategory;
   }
 
@@ -72,14 +77,16 @@ class NewProductBloc extends Bloc<NewProductEvent, NewProductState> {
     if (_selectedsubCategory == null) {
       return coreBloc.categories
           .firstWhere((element) => element.name == selectedCategory)
-          .subCategories[0];
+          .subCategories
+          .first;
     } else if (!coreBloc.categories
         .firstWhere((element) => element.name == _selectedCategory)
         .subCategories
         .contains(_selectedsubCategory)) {
       return coreBloc.categories
           .firstWhere((element) => element.name == selectedCategory)
-          .subCategories[0];
+          .subCategories
+          .first;
     } else {
       return _selectedsubCategory!;
     }

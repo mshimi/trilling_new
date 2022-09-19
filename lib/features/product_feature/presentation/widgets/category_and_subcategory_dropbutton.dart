@@ -11,15 +11,14 @@ import 'divider_widget.dart';
 
 class CategroyAndSubCategoryDropButton extends StatefulWidget {
   List<ProductCategory> categories;
-  String? selectedSubCategory;
+  // String? selectedSubCategory;
   List<String> subCategories = [];
   String selectedCategory;
   String selectedsubCategory;
-  
 
   CategroyAndSubCategoryDropButton(
       {super.key,
-      this.selectedSubCategory,
+      // this.selectedSubCategory,
 
       required this.categories,
       required this.selectedCategory,
@@ -38,18 +37,25 @@ class _CategroyAndSubCategoryDropButtonState
     double height = context.getWidth();
 
     // NewProductBloc newProductBloc = BlocProvider.of<NewProductBloc>(context);
-    List<String> subCatigories = widget.categories
-        .firstWhere((element) => element.name == widget.selectedCategory)
-        .subCategories;
+    // List<String> subCatigories = widget.categories
+    //     // .firstWhere((element) => element.name == widget.selectedCategory)
+    //     // .subCategories;
+
+    NewProductBloc newProductBloc = BlocProvider.of<NewProductBloc>(context);
+
+    String selectedCategory = newProductBloc.selectedCategory;
+    String selectedsubCategory = newProductBloc.selectedsubCategory;
+    List<String> subCategories = newProductBloc.subCatigories;
+
     return Column(
       children: [
         ChoiceInpuNewProduct(
             onchanged: (v) {
               setState(() {
-                widget.selectedCategory = v!;
+                newProductBloc.selectedCategory = v!;
               });
             },
-            value: widget.selectedCategory,
+            value: selectedCategory,
             items: widget.categories.map((e) => e.name).toList(),
             height: height,
             width: width,
@@ -59,11 +65,10 @@ class _CategroyAndSubCategoryDropButtonState
             onchanged: (v) {
               setState(() {
                 widget.selectedsubCategory = v!;
-                print(widget.selectedsubCategory);
               });
             },
-            value: widget.selectedsubCategory,
-            items: widget.subCategories,
+            value: selectedsubCategory,
+            items: subCategories,
             height: height,
             width: width,
             titel: 'subKategorie'),
